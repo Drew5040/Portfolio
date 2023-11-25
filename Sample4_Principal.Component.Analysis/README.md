@@ -1,3 +1,6 @@
+
+# Principal Component Analysis
+
 This project is a paper I wrote during my last semester at Temple. The focus of the paper is on the
 essential matrix algebra behind the feature engineering technique called Principal Component 
 Analysis or PCA for short. 
