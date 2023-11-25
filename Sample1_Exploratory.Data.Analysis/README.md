@@ -1,5 +1,5 @@
 
-**Exploratory Data Analysis**
+# Exploratory Data Analysis
 
 This project was completed during a three-month virtual internship with Data Glacier, a data analytics firm, from Aug. 2023 - Nov. 2023. The focus is on discovering and presenting valuable insights to a group of investors interested in diversifying their portfolios through the purchase of a transportation firm.
 
