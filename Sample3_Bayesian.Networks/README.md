@@ -1,3 +1,6 @@
+
+# Machine Learning: Building a Bayesian Network
+
 This project was completed during a three month virtual internship with Data Glacier, a data
 analytics firm, from Aug. 2023 - Nov. 2023. Let me note that this project came from personal
 interest in utilizing Bayesian Networks to extract value from data. It was completed during the 

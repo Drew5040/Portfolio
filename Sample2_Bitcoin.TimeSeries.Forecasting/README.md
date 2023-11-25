@@ -1,3 +1,6 @@
+
+# Time Series Forecasting with R
+
 This is the final project that I completed independently in Temple University's Time Series & 
 Forecasting course. The main objective was to create an ARIMA model that forecasted bitcoin's price
 over a seven day period. All model assumptions were checked and met. 
