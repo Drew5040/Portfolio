@@ -1,22 +1,28 @@
 
 # Machine Learning: Logistic Regression for Classification
 
-This project focuses on building a predictive model based on healthcare data that classifies
-a person to have or not have heart disease based on twelve continuous & categorical variables.
+This project focuses on building a predictive model based on healthcare data that classifies a person to have or not have heart disease based on twelve continuous & categorical variables.
 
+**Files:**
+- `heart.failure.prediction.ipynb`
 
-Files: heart.failure.prediction.ipynb
+**Data:**
+- `heart.csv`
 
-Data: heart.csv
+**Language Version:**
+Python 3.10
 
-Language Version: Python 3.10
+**Libraries:**
+- Pandas
+- NumPy
+- Scikit-Learn
+- SciPy
+- Skopt
+- Seaborn
+- Matplotlib
 
-Libraries: Pandas, NumPy, Scikit-Learn, SciPy, Skopt, Seaborn, Matplotlib
-
-Skills Showcased: - How to utilize machine learning algorithms
-
-                  - ability to preprocess unclean data
-
-                  - ability to build & understand classification models
- 
-                  - ability to use optimization algorithms
+**Skills Showcased:**
+- How to utilize machine learning algorithms.
+- Ability to preprocess unclean data.
+- Ability to build & understand classification models.
+- Ability to use optimization algorithms.
