@@ -17,21 +17,23 @@ Language Version: Python 3.11
 Libraries: Pandas, NumPy, Matplotlib, Seaborn, StatsModels, Plotly, Scikit-Learn, SciPy, Datetime,
            FuzzyWuzzy, Random, Locale, Re, PeakUtils
 
-Skills Showcased: - ability to perform exploratory data analysis, utilizing the most popular Python
-                    libraries to-date.
+Skills Showcased:
 
-		  - ability to utilize a variety of data cleaning, preprocessing and feature 
-                    engineering techniques to prepare data for more advanced modeling
+		 -[x] ability to perform exploratory data analysis, utilizing the most popular Python
+                      libraries to-date.
+ 
+		 -[x] ability to utilize a variety of data cleaning, preprocessing and feature 
+                      engineering techniques to prepare data for more advanced modeling
 
-                  - ability to utilize a variety of statistical test to verify assumptions and test
-                    for significance
+                 -[x] ability to utilize a variety of statistical test to verify assumptions and test
+                      for significance
 
-		  - ability to think statistically and draw conclusions
+		 -[x] ability to think statistically and draw conclusions
 
-                  - ability to create robust data visualizations
+                 -[x] ability to create robust data visualizations
 
-		  - ability to identify and model trends in raw data 
+		 -[x] ability to identify and model trends in raw data 
 
-                  - ability to present valuable insights to aid in decision making
+                 -[x] ability to present valuable insights to aid in decision making
 
                  
