@@ -76,3 +76,5 @@ target/
 
 # Ignore csv's
 *.csv
+*.tsv
+*.psv
