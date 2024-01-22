@@ -87,3 +87,5 @@ target/
 csv_files/
 tsv_files/
 psv_files/
+data/
+notebook/
