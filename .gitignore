@@ -76,5 +76,14 @@ target/
 
 # Ignore csv's
 *.csv
+
+# Ignore tsv's
 *.tsv
+
+# Ignore psv's
 *.psv
+
+# Ignore
+csv_files/
+tsv_files/
+psv_files/

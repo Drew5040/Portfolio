@@ -12,6 +12,8 @@ RUN python -m pip install --upgrade pip
 
 RUN apt-get update && apt-get install -y pkg-config libpango1.0-dev
 
+RUN apt-get update && apt-get install -y xvfb
+
 # Install Python libraries
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -22,4 +24,4 @@ EXPOSE 80
 ENV NAME World
 
 # Run the app when the container launches
-CMD ["python", "app.py"]
+CMD  ["xvfb-run", "python", "main.py"]
