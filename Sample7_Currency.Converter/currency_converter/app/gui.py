@@ -4,9 +4,8 @@ from clipboard_features import ClipboardFeatures
 from config import load_api_key
 from reportlab.pdfgen import canvas
 from config import save_api_key
-from os import startfile
-from os import path, getenv
-from os.path import exists
+from subprocess import Popen, DEVNULL
+from os import path, getenv, system
 from typing import Tuple
 from datetime import datetime, time
 from logs import log_conversion, log_error
@@ -36,10 +35,11 @@ def create_gui() -> Tuple[StringVar, StringVar, StringVar, StringVar, StringVar]
     root.title("Anwoo's Currency Converter")
 
     # Path to .ico file
-    icon_path = 'icon/favicon.ico'
+    icon_path = (r'C:\Users\andre\Repositories\Professional.Portfolio\Sample7_Currency.Converter\currency_converter'
+                 r'\app\icon\favicon.ico')
 
     # Set icon
-    root.iconbitmap(icon_path)
+    root.iconbitmap(default=icon_path)
 
     def is_valid_currency(currency: str) -> bool:
         currency_symbols = [
@@ -109,15 +109,28 @@ def create_gui() -> Tuple[StringVar, StringVar, StringVar, StringVar, StringVar]
         # Close window when cancel button is clicked
         root.destroy()
 
-    def open_pdf(pdf_file_path: str) -> None:
+    # def open_pdf(pdf_file_path: str) -> None:
+    #     try:
+    #         # Open the PDF with the default PDF viewer
+    #         Popen(['open', pdf_file_path], stdout=DEVNULL, stderr=DEVNULL)
+    #     # Raise exception if file does not exist
+    #     except FileNotFoundError as e:
+    #         # Log the error
+    #         log_error(type(e).__name__, str(e))
+    #         # Print the error
+    #         print(f"Error opening PDF: {e}")
+
+    def open_pdf(pdf_path: str) -> None:
         try:
-            # Open the PDF with the default PDF viewer
-            startfile(pdf_file_path)
-        # Raise exception if file does not exist
-        except FileNotFoundError as e:
+            # Check if the PDF file exists
+            if path.exists(pdf_path):
+                # Open the PDF using the default PDF viewer
+                system(f'start "" "{pdf_path}"')
+            else:
+                print(f"PDF file does not exist at {pdf_path}")
+        except Exception as e:
             # Log the error
             log_error(type(e).__name__, str(e))
-            # Print the error
             print(f"Error opening PDF: {e}")
 
     def print_pdf() -> None:
@@ -142,20 +155,18 @@ def create_gui() -> Tuple[StringVar, StringVar, StringVar, StringVar, StringVar]
 
                     # Write the results to PDF file
                     try:
-
                         for line_num in range(10):
                             pdf.drawCentredString(x=10, y=10, text=" ")
                             if line_num == 7:
-                                pdf.drawCentredString(x=300, y=600,
-                                                      text=f'Timestamp: {datetime.fromtimestamp(time())}')
+                                pdf.drawCentredString(x=300, y=600, text=f'Timestamp: {datetime.fromtimestamp(time())}')
                             elif line_num == 8:
-                                pdf.drawCentredString(x=300, y=580, text='Conversion done by: '
-                                                                         'https://api.freecurrencyapi.com/v1/latest')
+                                pdf.drawCentredString(x=300, y=580,
+                                                      text='Conversion done by: https://api.freecurrencyapi.com/v1'
+                                                           '/latest')
                         # Set size and font of PDF file
                         pdf.setFont(psfontname='Helvetica', size=18)
                         pdf.drawCentredString(x=300, y=560, text=result_text)
 
-                    # Catch various exceptions if they occur
                     except Exception as e:
                         # Log the error
                         log_error(type(e).__name__, str(e))
@@ -177,11 +188,11 @@ def create_gui() -> Tuple[StringVar, StringVar, StringVar, StringVar, StringVar]
                     print(f"UnicodeEncodeError while writing to temporary file: {e}")
 
                 finally:
-                    # Delete the temporary txt file
+                    # Close the temporary txt file
                     temp_file.close()
 
-            # Open the PDF
-            open_pdf(pdf_file_path)
+                    # Open the PDF
+                    open_pdf(pdf_file_path)
 
     def check_entry_fields_are_filled() -> bool:
         # Check if all entry fields are filled
@@ -202,7 +213,7 @@ def create_gui() -> Tuple[StringVar, StringVar, StringVar, StringVar, StringVar]
 
     # Load the API key when the GUI is created
     config_file_path = path.join(getenv('APPDATA'), "Anwoo's Currency Converter Tool", 'config.json')
-    if exists(config_file_path):
+    if path.exists(config_file_path):
         loaded_api_key = load_api_key()
 
         if loaded_api_key:
@@ -215,7 +226,7 @@ def create_gui() -> Tuple[StringVar, StringVar, StringVar, StringVar, StringVar]
     api_key_entry.grid(row=0, column=1, padx=5, pady=5)
 
     # If API key was already saved and loaded into entry field, switch entry field to read-only
-    if exists(config_file_path):
+    if path.exists(config_file_path):
         api_key_entry.configure(state='readonly')
 
     # Source currency entry field

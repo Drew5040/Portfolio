@@ -3,22 +3,16 @@ from sys import argv
 from conversion import convert_currency
 from gui import create_gui
 from logs import log_conversion
-import welcome
 
 
 def main():
     # Check len of command-line argument list
     if len(argv) == 1:
 
-        # No command-line arguments
-        print("Running in GUI mode...")
-
         # Open GUI
         create_gui()
 
     else:
-        # Parse command-line arguments
-        print("Running in command-line mode...")
 
         # Create argument parser object
         parser = ArgumentParser(description="Anwoo's Currency Converter Tool")
