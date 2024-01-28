@@ -1,0 +1,7 @@
+data/
+notebook/
+venv/
+venv2/
+Procfile
+__pycache__
+.idea
