@@ -1,0 +1,57 @@
+/* styles.css */
+
+/* Center the form & title */
+
+h3 {
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align; center;
+    color: #2d3133ff;
+    text-decoration: underline;
+    line-height: 1.5;
+}
+body {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Style form container */
+.form-container {
+    padding: 20px; /* Add padding around the form */
+    border: 10px solid #ccc; /* Add a border */
+    border-radius: 20px; /* Add rounded corners */
+    background-color: #cff5cbff; /* Add background color */
+    cursor: pointer;
+}
+
+
+
+/* Style form fields */
+input[type="text"],
+select {
+    width: calc(100% - 70px); /* Make input fields and select boxes take full width minus 20px */
+    padding: 8px; /* Add padding to input fields and select boxes */
+    margin-bottom: 10px; /* Add margin below input fields and select boxes */
+}
+
+/* Style form submit button */
+input[type="submit"] {
+    display: block; /* Make the submit button a block-level element */
+    margin: 20px auto 0; /* Add margin to the top (20px), center horizontally (auto), and no margin to the bottom (0) */
+    padding: 10px 20px; /* Add padding to the button */
+    background-color: #4CAF50; /* Green background color */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    background-color: #45a049;
+}
+
+
+

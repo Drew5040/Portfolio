@@ -1,7 +1,0 @@
-Release Information:
-- Image Tag: andrewodrain/web-applications:income-prediction-v0.0.1
-- SHA digest: sha256:2ef57e37a06a5cbc04fbc4841622df1d92e78083ea7f5567c52a7dbb6dce273d size: 2210
-- Deployment Date: 2024-01-22
-- Release Notes: [Include any relevant notes]
-
- 
