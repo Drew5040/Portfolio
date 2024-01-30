@@ -1,57 +1,120 @@
-/* styles.css */
 
-/* Center the form & title */
+.profile-pic {
+    max-width: 20%;
+    height: auto;
+    border: 3px solid grey;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.bio-section {
+    font-family: Helvetica Neue, sans-serif;
+    font-size: 18px;
+    display: flex;
+}
 
 h3 {
-    font-family: Arial, sans-serif;
-    font-size: 15px;
+    font-family: Helvetica Neue, sans-serif;
+    font-size: 28px;
     font-weight: bold;
-    text-align; center;
-    color: #2d3133ff;
+    text-align: center;
+    color: #0D1117;
     text-decoration: underline;
     line-height: 1.5;
 }
+
 body {
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    font-family: Helvetica Neue, sans-serif;
+    font-size: 11px;
     margin: 0;
 }
 
-/* Style form container */
+body:not(.form-container) {
+    background-color: #c0f4c5;
+}
+
 .form-container {
-    padding: 20px; /* Add padding around the form */
-    border: 10px solid #ccc; /* Add a border */
-    border-radius: 20px; /* Add rounded corners */
-    background-color: #cff5cbff; /* Add background color */
+    max-width: 1000px; /* Adjust the maximum width as needed */
+    width: 30%; /* Ensure the container takes full width */
+    margin: 99px auto 20px;
+    padding: 20px;
+    border: 2px solid grey;
+    border-radius: 20px;
+    background-color: #c0f4c5;
+    cursor: pointer;
+    max-height: calc(100vh - 300px);
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Add text shadow */
+.form-container,
+.form-container label,
+.form-container select,
+.form-container input[type="text"],
+.form-container input[type="submit"] {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Add a subtle text shadow for depth */
+}
+
+.form-container input[type="text"],
+.form-container input[type="submit"],
+.form-container select {
+    border-width: 0.5px; /* Adjust the thickness as needed */
+}
+
+input[type="text"],
+select {
+    width: calc(100% - 10px);
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: white; /* Removed quotes around color name */
+}
+
+input[type="submit"] {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
 
+.form-group {
+    width: 100%;
+    margin-bottom: 1px;
+}
 
-
-/* Style form fields */
 input[type="text"],
 select {
-    width: calc(100% - 70px); /* Make input fields and select boxes take full width minus 20px */
-    padding: 8px; /* Add padding to input fields and select boxes */
-    margin-bottom: 10px; /* Add margin below input fields and select boxes */
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 0px;
 }
 
-/* Style form submit button */
-input[type="submit"] {
-    display: block; /* Make the submit button a block-level element */
-    margin: 20px auto 0; /* Add margin to the top (20px), center horizontally (auto), and no margin to the bottom (0) */
-    padding: 10px 20px; /* Add padding to the button */
-    background-color: #4CAF50; /* Green background color */
-    color: white; /* White text color */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Add rounded corners */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    background-color: #45a049;
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Adjust the padding or margin of the content above the footer */
+.content-above-footer {
+    padding-bottom: 60px; /* Adjust the value based on the height of the footer */
 }
 
 
+.footer {
+    background-color: #333; /* Choose your desired background color */
+    color: white; /* Text color for contrast */
+    padding: 15px 0; /* Adjust padding as needed */
+    text-align: center; /* Center align the text */
+    position: fixed; /* Fixed positioning */
+    left: 0; /* Align to the left */
+    bottom: 0; /* Align to the bottom */
+    width: 100%; /* Span the entire width of the page */
+}
 
+.footer-text {
+    font-size: 12px; /* Adjust font size as needed */
+}
