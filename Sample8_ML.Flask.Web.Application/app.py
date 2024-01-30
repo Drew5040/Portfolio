@@ -21,7 +21,7 @@ def favicon():
 
 @app.route('/')
 def home_page():
-    return render_template('index.html')
+    return render_template('profile.html')
 
 
 def value_predictor(to_predict_list):
@@ -59,9 +59,9 @@ def result():
                            'hours_per_week', 'native-country']
 
         for field in required_fields:
-            if form_data[field] == '':
+            if form_data[field] == '' or form_data[field] == '-':
                 # Render the template with the error message
-                return render_template('index.html', error_message='Please fill out all required fields')
+                return render_template('profile.html', error_message='*Please fill out all required fields')
 
         to_predict_list = request.form.to_dict()
         to_predict_list = list(to_predict_list.values())

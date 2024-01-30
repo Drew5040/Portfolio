@@ -1,0 +1,231 @@
+
+
+{% extends "index.html" %}
+{% block title %}
+    Machine Learning: Creator's Profile
+{% endblock %}
+{% block content %}
+<div class="container-fluid mt-5 content-above-footer">
+    <div class="row">
+        <!-- Profile image section -->
+        <div class="col-md-4 order-md-1">
+            <div class="text-center" style="margin-top: 10vh">
+                <img src="static/git.headshot.400.400.jpg" alt="Photo" class="img-fluid rounded-circle mx-auto d-block profile-pic">
+            </div>
+            <h2 class="text-center mt-4">Andrew O'Drain</h2>
+        </div>
+        <!-- Text and form section -->
+        <div class="col-md-8 order-md-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <p>Hello, a. ddddddddddddd
+                           HHHHHHHHHHHHHHHHHHHHHHH
+                           HHHHHHHHHHHHHHHHHHHHHHH
+						   Hello, a. ddddddddddddd
+                           HHHHHHHHHHHHHHHHHHHHHHH
+                           HHHHHHHHHHHHHHHHHHHHHHH
+						   Hello, a. ddddddddddddd
+                           HHHHHHHHHHHHHHHHHHHHHHH
+                           HHHHHHHHHHHHHHHHHHHHHHH</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-container">
+                        <h3>Income Prediction Form</h3>
+
+
+		<!-- Display error message if it exists -->
+    {% if error_message %}
+    <div id="error-message" style="color: red;">{{ error_message }}</div>
+    {% endif %}
+
+<form id="predictionForm" action="/result" method="POST" onsubmit="return validateForm()">
+	<div class="form-group">
+	<label for="age">Age</label>
+	<input type="text" id="age" name="age">
+	</div>
+	<br>
+	<div class="form-group">
+	<label for="w_class">Occupational Sector</label>
+	<select id="w_class" name="w_class">
+		<option>-</option>
+	<option value="0">Federal-gov</option>
+	<option value="1">Local-gov</option>
+	<option value="2">Never-worked</option>
+	<option value="3">Private</option>
+	<option value="4">Own Business/INC.</option>
+	<option value="5">Own Business/Not INC.</option>
+	<option value="6">State-Gov</option>
+	<option value="7">Volunteer/Intern</option>
+	</select>
+	</div>
+	<br>
+		<div class="form-group">
+	<label for="edu">Education</label>
+	<select id="edu" name="edu">
+		<option>-</option>
+	<option value="0">10th</option>
+	<option value="1">11th</option>
+	<option value="2">12th</option>
+	<option value="3">1st-4th</option>
+	<option value="4">5th-6th</option>
+	<option value="5">7th-8th</option>
+	<option value="6">9th</option>
+	<option value="7">Associate</option>
+	<option value="8">Vocational</option>
+	<option value="9">Bachelors</option>
+	<option value="10">Doctorate</option>
+	<option value="11">HS-grad</option>
+	<option value="12">Masters</option>
+	<option value="13">Preschool</option>
+	<option value="14">Prof-school</option>
+	<option value="15">Some-college</option>
+	</select>
+	</div>
+	<br>
+	<div class="form-group">
+	<label for="martial_stat">Marital Status</label>
+	<select id="martial_stat" name="martial_stat">
+		<option>-</option>
+	<option value="0">Divorced</option>
+	<option value="1">Married</option>
+	<option value="2">Single</option>
+	</select>
+	</div>
+	<br>
+	<div class="form-group">
+	<label for="occupation">Occupation</label>
+	<select id="occupation" name="occupation">
+		<option>-</option>
+	<option value="0">Admin/Clerical</option>
+	<option value="1">Armed Forces</option>
+	<option value="2">Craftsman</option>
+	<option value="3">Managerial</option>
+	<option value="4">Farming</option>
+	<option value="5">Cleaners</option>
+	<option value="6">Machine/Inspection</option>
+	<option value="7">Other/Service</option>
+	<option value="8">Grounds Keeper</option>
+	<option value="9">Professional</option>
+	<option value="10">Civil Servant</option>
+	<option value="11">Sales</option>
+	<option value="12">Tech Support</option>
+	<option value="13">Transport</option>
+	</select>
+	</div>
+	<br>
+	<div class="form-group">
+	<label for="relation">Relationship</label>
+	<select id="relation" name="relation">
+		<option>-</option>
+	<option value="0">Husband</option>
+	<option value="1">Associate</option>
+	<option value="2">Other/Relative</option>
+	<option value="3">Son/Daughter</option>
+	<option value="4">Unmarried</option>
+	<option value="5">Wife</option>
+	</select>
+	</div>
+	<br>
+	<div class="form-group">
+	<label for="race">Race</label>
+	<select id="race" name="race">
+		<option>-</option>
+	<option value="0">American Indian/Eskimo</option>
+	<option value="1">Asian Pacific Islander</option>
+	<option value="2">Black</option>
+	<option value="3">Other</option>
+	<option value="4">White</option>
+	</select>
+	</div>
+	<br>
+	<div class="form-group">
+	<label for="gender">Gender</label>
+	<select id="gender" name="gender">
+		<option>-</option>
+	<option value="0">Female</option>
+	<option value="1">Male</option>
+	</select>
+	</div>
+	<br>
+	<div class="form-group">
+	<label for="c_gain">Capital Gain </label>
+	<input type="text" id="c_gain" name="c_gain"> [0-99999]
+	</div>
+	<br>
+	<div class="form-group">
+	<label for="c_loss">Capital Loss </label>
+	<input type="text" id="c_loss" name="c_loss"> [0-4356]
+	</div>
+	<br>
+	<div class="form-group">
+	<label for="hours_per_week">Hours per Week </label>
+	<input type="text" id="hours_per_week" name="hours_per_week"> [1-99]
+	</div>
+	<br>
+	<div class="form-group">
+	<label for="native-country">Native Country</label>
+	<select id="native-country" name="native-country">
+		<option>-</option>
+	<option value="0">Cambodia</option>
+	<option value="1">Canada</option>
+	<option value="2">China</option>
+	<option value="3">Columbia</option>
+	<option value="4">Cuba</option>
+	<option value="5">Dominican Republic</option>
+	<option value="6">Ecuador</option>
+	<option value="7">El Salvador</option>
+	<option value="8">England</option>
+	<option value="9">France</option>
+	<option value="10">Germany</option>
+	<option value="11">Greece</option>
+	<option value="12">Guatemala</option>
+	<option value="13">Haiti</option>
+	<option value="14">Netherlands</option>
+	<option value="15">Honduras</option>
+	<option value="16">HongKong</option>
+	<option value="17">Hungary</option>
+	<option value="18">India</option>
+	<option value="19">Iran</option>
+	<option value="20">Ireland</option>
+	<option value="21">Italy</option>
+	<option value="22">Jamaica</option>
+	<option value="23">Japan</option>
+	<option value="24">Laos</option>
+	<option value="25">Mexico</option>
+	<option value="26">Nicaragua</option>
+	<option value="27">Outlying-US(Guam-SUVI-etc)</option>
+	<option value="28">Peru</option>
+	<option value="29">Philippines</option>
+	<option value="30">Poland</option>
+	<option value="11">Portugal</option>
+	<option value="32">Puerto-Rico</option>
+	<option value="33">Scotland</option>
+	<option value="34">South</option>
+	<option value="35">Taiwan</option>
+	<option value="36">Thailand</option>
+	<option value="37">Trinidad & Tobago</option>
+	<option value="38">United States</option>
+	<option value="39">Vietnam</option>
+	<option value="40">Yugoslavia</option>
+	</select>
+	</div>
+	<br>
+	<input type="submit" value="Submit" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">
+</form>
+ 					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+{% endblock %}
+
+
+
+
