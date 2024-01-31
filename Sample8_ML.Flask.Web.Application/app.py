@@ -1,22 +1,14 @@
 import logging
-from sys import stdout
-from flask import request, render_template, Flask, redirect, url_for, send_from_directory
+from flask import request, render_template, Flask
+from gunicorn.app.base import Application
 import numpy as np
 import pickle
-import os
-
-# from gunicorn.app.base import Application
 
 # Set up logging configuration
-logging.basicConfig(level=logging.DEBUG, stream=stdout, format='%(asctime)s - %(name)s - %('
-                                                               'levelname)s - %(message)s')
+logging.basicConfig(filename='logs/flask/error.log', level=logging.DEBUG, format='%(asctime)s - %(name)s - %('
+                                                                                 'levelname)s - %(message)s')
 
 app = Flask(__name__)
-
-
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
 
 @app.route('/')
@@ -28,19 +20,17 @@ def value_predictor(to_predict_list):
     try:
         loaded_model = pickle.load(open("model.pkl", "rb"))
     except FileNotFoundError:
-        logging.error("Model file not found.")
+        logging.error("model file not found...")
         return None
 
     if len(to_predict_list) != 12:
-        logging.error("Incorrect number of features in input data.")
         return None
 
     to_predict = np.array(to_predict_list).reshape(1, 12)
-    logging.debug(f"Input data for prediction: {to_predict}")
 
     try:
         results = loaded_model.predict(to_predict)
-        logging.info('Results Returned')
+        logging.info('results returned...')
     except Exception as e:
         logging.error(f"Error during prediction: {e}")
         return None
@@ -50,16 +40,18 @@ def value_predictor(to_predict_list):
 
 @app.route('/result', methods=['POST'])
 def result():
-    logging.info('result page accessed')
+    logging.info('result page accessed...')
 
     if request.method == 'POST':
         form_data = request.form.to_dict()
         # Check if any required fields are empty
         required_fields = ['age', 'w_class', 'edu', 'martial_stat', 'occupation', 'relation', 'race', 'gender',
-                           'hours_per_week', 'native-country']
-
+                           'c_gain', 'c_loss', 'hours_per_week', 'native-country']
+        print(form_data)
         for field in required_fields:
+
             if form_data[field] == '' or form_data[field] == '-':
+                logging.debug('error_message accessed...')
                 # Render the template with the error message
                 return render_template('profile.html', error_message='*Please fill out all required fields')
 
@@ -79,22 +71,17 @@ def result():
         # Add a print statement
         logging.debug(f"Prediction result: {prediction}")
 
-        return redirect(url_for('show_result', prediction=prediction))
+        return render_template('result.html', prediction=prediction)
 
 
-@app.route('/show_result/<prediction>')
-def show_result(prediction):
-    return render_template('result.html', prediction=prediction)
+class FlaskApplication(Application):
+    def __init__(self, parser, opts, *args):
+        super(FlaskApplication, self).__init__(parser, opts)
+        self.parser = parser
+        self.opts = opts
+        self.args = args
 
-
-# class FlaskApplication(Application):
-#     def __init__(self, parser, opts, *args):
-#         super(FlaskApplication, self).__init__(parser, opts)
-#         self.parser = parser
-#         self.opts = opts
-#         self.args = args
-#
 
 if __name__ == '__main__':
-    # FlaskApplication(None, None).run()
-    app.run(debug=True, port=5000)
+    logging.debug('main() accessed ...')
+    FlaskApplication(None, None).run()
