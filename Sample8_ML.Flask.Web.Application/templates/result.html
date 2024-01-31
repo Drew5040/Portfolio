@@ -2,9 +2,15 @@
 
 {% extends "index.html" %}
 {% block title %}
-	Machine Learning: Results
+	Web App: Results
 {% endblock %}
 
 {% block content %}
-	<h1>{{prediction}}</h1>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-4 col-xs-4 mt-5"> <!-- Adjust the column width as needed -->
+            <h1 class="pt-3 pt-md-5 pb-5">{{ prediction }}</h1>
+        </div>
+    </div>
+</div>
 {% endblock %}

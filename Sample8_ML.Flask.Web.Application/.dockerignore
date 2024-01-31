@@ -1,7 +1,82 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore Python-specific files
+__pycache__/
+
+*.pyd
+*.pyo
+*.pyc
+
+# Ignore virtual environments
+.venv/
+venv/
+env/
+*.env
+.env/
+
+# Ignore IDE-specific files
+.idea/
+.vscode/
+
+# Ignore logs and databases
+*.log
+*.sql
+*.sqlite
+*.sqlite3
+db.sqlite*
+
+# Ignore compiled files
+*.class
+*.jar
+*.war
+*.ear
+*.hprof
+*.min.js
+*.min.css
+*.gz
+
+# Ignore build/compiled directories
+bin/
+build/
+dist/
+out/
+target/
+
+# Ignore Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Ignore compiled LaTeX files
+*.aux
+*.bbl
+*.blg
+*.out
+*.pdf
+
+# Ignore miscellaneous files
+*.bak
+*.swp
+*.tmp
+
+# Ignore backup files
+*~
+#*#
+
+
+# Ignore csv's
+*.csv
+
+# Ignore tsv's
+*.tsv
+
+# Ignore psv's
+*.psv
+
+# Ignore
+csv_files/
+tsv_files/
+psv_files/
 data/
 notebook/
-venv/
-venv2/
-Procfile
-__pycache__
-.idea
+logs
