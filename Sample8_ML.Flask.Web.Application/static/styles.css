@@ -10,36 +10,103 @@
 
 }
 .profile-pic {
-    max-width: 300px;
-    width: 300px;
-    margin-top: 1px; /* Adjust the top margin */
-    margin-left: 1px; /* Adjust the left margin */
+    max-width: 250px;
+    width: 250px;
+    margin: 0 auto 50px; /* Center horizontally and add bottom margin */
+    display: block; /* Ensure the image is displayed as a block element */
     border: 2px solid grey;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
+.logo {
+    max-width: 200px;
+    width: 200px;
+    margin: 0 auto 0px; /* Center horizontally and add bottom margin */
+    display: block; /* Ensure the image is displayed as a block element */
+    border: 2px solid grey;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
 
 .text-box {
-
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto 50px; /* Center horizontally and add bottom margin */
+
 
 }
 
-h3 {
-    font-family: Helvetica Neue, sans-serif;
+.container {
+    /* Center the content horizontally */
+    text-align: center;
+}
+
+.diamond-bullets {
+    /* Remove default list styles */
+    list-style: none;
+    padding: 0;
+    margin-top; 10px
+    margin-bottom: 10px; /* Add bottom margin */
+}
+
+.diamond-bullets span {
+    /* Display the diamond symbols as inline elements */
+    display: inline-block;
+    width: 20px; /* Adjust the width as needed */
+    height: 20px; /* Adjust the height as needed */
+    margin: 0 20px; /* Adjust the spacing between the diamonds */
+    font-size: 20px; /* Adjust the size of the diamond */
+    color: black; /* Color of the diamond */
+    text-align: center; /* Center the diamond */
+    line-height: 20px; /* Center the diamond vertically */
+}
+
+.prediction-box {
+    font-size: 20;
+    max-width: 800px;
+    margin: 0 auto 20px; /* Center horizontally and add bottom margin */
+    padding: 30px;
+    margin-bottom: 20px;
+    text-align: center; /* Center-align the content */
+    color: green;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .prediction-box h1 {
+        font-size: 22px; /* Further reduce font size for narrower screens */
+    }
+}
+
+@media (max-width: 280px) {
+    .prediction-box h1 {
+        font-size: 16px
+    }
+}
+
+h2 {
     font-size: 28px;
     font-weight: bold;
     text-align: center;
     color: #0D1117;
-    text-decoration: underline;
     line-height: 1.5;
+}
+
+
+h3 {
+
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    color: #0D1117;
+    line-height: 2.5;
 }
 
 body {
     font-family: Helvetica Neue, sans-serif;
     font-size: 11px;
     margin: 0;
+    background-color: #c0f4c5;
+
 }
 
 body:not(.form-container) {
@@ -47,20 +114,18 @@ body:not(.form-container) {
 }
 
 .form-container {
-    max-width: 400px; /* Adjust the maximum width as needed */
-    width: 100%; /* Ensure the container takes full width */
-    margin: 99px auto 20px;
+    max-width: 400px;
+    width: 100%;
+    margin: 90px auto; /* Adjust margin-top and margin-bottom */
     padding: 20px;
     border: 2px solid grey;
     border-radius: 20px;
     background-color: #c0f4c5;
     cursor: pointer;
-    max-height: calc(100vh - 300px);
-    overflow-y: auto; /* Enable vertical scrolling if needed */
+    overflow-y: auto;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-/* Add text shadow */
 .form-container,
 .form-container label,
 .form-container select,
@@ -72,7 +137,14 @@ body:not(.form-container) {
 .form-container input[type="text"],
 .form-container input[type="submit"],
 .form-container select {
-    border-width: 0.5px; /* Adjust the thickness as needed */
+    border-width: 0.25px; /* Adjust the thickness as needed */
+}
+
+/* Remove or adjust the following margin properties */
+.form-container label select,
+.form-group {
+    margin-bottom: 10px;
+    text-align: left;
 }
 
 input[type="text"],
@@ -83,13 +155,14 @@ select {
     background-color: white; /* Removed quotes around color name */
 }
 
+
 input[type="submit"] {
     display: block;
     margin: 20px auto 0;
     padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
-    border: none;
+    border: 1px solid grey;
     border-radius: 5px;
     cursor: pointer;
 }
