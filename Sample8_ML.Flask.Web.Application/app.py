@@ -1,6 +1,6 @@
 import logging
-from flask import request, render_template, Flask
-from gunicorn.app.base import Application
+from flask import request, render_template, Flask, session
+# from gunicorn.app.base import Application
 import numpy as np
 import pickle
 
@@ -9,6 +9,8 @@ logging.basicConfig(filename='logs/flask/error.log', level=logging.DEBUG, format
                                                                                  'levelname)s - %(message)s')
 
 app = Flask(__name__)
+
+app.secret_key = 'ziggy'
 
 
 @app.route('/')
@@ -38,7 +40,7 @@ def value_predictor(to_predict_list):
     return results[0]
 
 
-@app.route('/result', methods=['POST'])
+@app.route('/', methods=['POST'])
 def result():
     logging.info('result page accessed...')
 
@@ -64,24 +66,25 @@ def result():
 
         results = value_predictor(to_predict_list)
         if int(results) == 1:
-            prediction = 'Income more than 50K'
+            prediction = '* Income more than 50K *'
         else:
-            prediction = 'Income less than 50K'
+            prediction = '* Income less than 50K *'
 
         # Add a print statement
         logging.debug(f"Prediction result: {prediction}")
 
-        return render_template('result.html', prediction=prediction)
+        return render_template('profile.html', prediction=prediction)
 
 
-class FlaskApplication(Application):
-    def __init__(self, parser, opts, *args):
-        super(FlaskApplication, self).__init__(parser, opts)
-        self.parser = parser
-        self.opts = opts
-        self.args = args
+# class FlaskApplication(Application):
+#     def __init__(self, parser, opts, *args):
+#         super(FlaskApplication, self).__init__(parser, opts)
+#         self.parser = parser
+#         self.opts = opts
+#         self.args = args
 
 
 if __name__ == '__main__':
-    logging.debug('main() accessed ...')
-    FlaskApplication(None, None).run()
+    # logging.debug('main() accessed ...')
+    # FlaskApplication(None, None).run()
+    app.run(debug=True, port=5000)
