@@ -1,5 +1,4 @@
 
-
 # Directories
 csv_files/
 tsv_files/
@@ -55,6 +54,7 @@ db.sqlite*
 *.swp
 *.tmp
 *~
+
 
 # Csv's
 *.csv
