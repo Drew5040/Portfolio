@@ -18,6 +18,7 @@ dist/
 out/
 target/
 .ipynb_checkpoints/
+aws_eb_deploy/
 
 # Windows system files
 .DS_Store

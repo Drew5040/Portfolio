@@ -16,7 +16,7 @@ app = Flask(__name__)
 # Set homepage route
 @app.route('/')
 def home_page():
-    return render_template('profile.html')
+    return render_template('welcome.html')
 
 
 # Model Prediction
@@ -58,7 +58,7 @@ def result():
             if form_data[field] == '' or form_data[field] == '-':
                 logging.debug('error_message accessed...')
 
-                return render_template('profile.html', error_message='*Please fill out all required fields')
+                return render_template('welcome.html', error_message='*Please fill out all required fields')
 
         to_predict_list = request.form.to_dict()
         to_predict_list = list(to_predict_list.values())
@@ -75,7 +75,7 @@ def result():
 
         logging.debug(f"Prediction result: {prediction}")
 
-        return render_template('profile.html', prediction=prediction)
+        return render_template('welcome.html', prediction=prediction)
 
 
 class FlaskApplication(Application):

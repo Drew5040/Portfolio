@@ -15,8 +15,12 @@ function hidePrediction() {
     predictionElement.style.display = 'none';
 }
 
-// Add an event listener to the age input field
-document.getElementById('age').addEventListener('focus', function () {
-    hidePrediction();
-});
+// Select all input fields
+var inputFields = document.querySelectorAll('input, select');
 
+// Iterate over each field and add the 'focus' event listener
+inputFields.forEach(function(field) {
+    field.addEventListener('focus', function() {
+    hidePrediction();
+    });
+});
