@@ -1,0 +1,75 @@
+
+<!-- Inherit: 'index.html' -->
+{% extends 'index.html' %}
+
+<!-- Title of Page -->
+{% block title %}
+Project: About
+{% endblock %}
+
+{% block links %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='about.css') }}">
+{% endblock %}
+
+<!-- Start: Page Content -->
+{% block content %}
+
+<!-- Start: Project Overview -->
+<div class="project-overview">
+
+    <!-- Wrapper for Centering-->
+    <div class="content-wrapper">
+            <p><b>
+                In this comprehensive project, I leveraged a multidisciplinary approach, combining the skills of
+                web development, machine learning, and cloud computing to develop a simple yet dynamic web application
+                that predicts income levels based on user-inputted demographic data. The core of the application is built
+                upon a robust machine learning model, specifically a Decision Tree algorithm, trained and tested using a
+                rich dataset of adult demographics.
+                <br>
+                <br>
+                To alleviate any potential concerns over privacy while using the application, I have adopted a generic but
+                comprehensive privacy policy linked at the bottom of each page, that communicates what data is collected from
+                the user and how that data is either utilized or not utilized. I provide my personal guarantee that no demographic
+                data is stored in databases for later use, and the data is not sold. All data that is inputted into the algorithm
+                is erased as soon as the user leaves the page. Except a few logging details that consist of matrix data, but with
+                no name or id to attach to it, making this demonstration completely private.
+                <br>
+                <br>
+                The web interface, developed using HTML, CSS, JavaScript, and Jinja2 offers a colorful, user-friendly
+                platform for users to input their personal demographic information. The backend powered by Python & Flask,
+                seamlessly integrates with the frontend, processing user inputs and interacting with the machine learning model
+                for real-time predictions. JavaScript and Jinja2 templating enriches the frontend with dynamic content generation,
+                enhancing user experience by providing immediate feedback based on the processed data.
+                <br>
+                <br>
+                To ensure the projects maintainability and scalability, I employed the use of Docker for containerization,
+                encapsulating the application and its environment to guarantee consistency across different development and
+                deployment stages. For deployment, the application is hosted on AWS Elastic Beanstalk, a managed service that provides
+                automated scaling and load balancing, ensuring high availability and performance of the site and application. Domain
+                management was handled through GoDaddy, establishing a professional web presence with my legal name as the custom domain.
+                <br>
+                <br>
+                Development and testing of the model and website were conducted on in Jupyter Notebook, PyCharm, and the Flask development
+                server facilitating iterative experimentation and visualization, enabling the project's creation. Please keep in mind that
+                the model is currently approximating 83% accuracy. Not much time was spent in the fine-tuning of the model, in favor of
+                dedicating that time to perfect the styling of the interface. The Python data science libraries that were utilized in
+                bringing this project to ife include Pandas, NumPy, and Scikit-Learn.
+                <br>
+                <br>
+                For efficiency, scalability, and reliability, I chose to utilize a reverse proxy setup with an application server, employing
+                Gunicorn for the WSGI (web server gateway interface) or HTTP server, and the high performance server Nginx inside the isolated
+                environment of the Docker container.
+            </b></p>
+
+        </div>
+    </div>
+
+<!-- Link to JavaScript -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<!-- Pass 'errors_json' dictionary to script.js -->
+<script type="text/javascript">var errors = JSON.parse('{{ errors_json|safe }}');</script>
+
+<!-- End: Content-->
+{% endblock %}

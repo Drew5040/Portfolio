@@ -1,0 +1,40 @@
+
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 800px;
+    margin-top: 90px;
+}
+
+body:not(.contact-info) {
+    background-color: #2a9d8f;
+    cursor: pointer;
+}
+
+.contact-form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+.contact-form input[type=text],
+.contact-form input[type=email],
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+}
+.contact-form button {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+
+
+.flex-wrapper {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    min-height: 100vh; /* Minimum height to fill the viewport */
+    padding-top: 5rem; /* Adjust based on your needs, considering mt-5 */
+}
