@@ -26,12 +26,13 @@ def about_page():
 
 @app.route('/model')
 def model_page():
-    return render_template('model.html')
+    message = '**Please fill out all fields**'
+    return render_template('model.html', message=message)
 
 
-@app.route('/contact')
-def contact_page():
-    return render_template('contact.html')
+# @app.route('/contact')
+# def contact_page():
+#     return render_template('contact.html')
 
 
 # Model Prediction
@@ -71,8 +72,9 @@ def validate_form_entries(form_data):
 
     print(errors)
     # Add any additional validation checks here, for example, checking if age is a number
-    if 'age' in form_data and not form_data['age'].isdigit():
+    if 'age' in form_data and (not form_data['age'].isdigit() or not 17 <= int(form_data['age']) <= 90 or isinstance(form_data['age'], float)):
         errors['age'] = '**Age must be a valid number**'
+        is_valid = False
     if 'w_class' in form_data and form_data['w_class'] == '-':
         errors['w_class'] = '**Please choose a category**'
     if 'edu' in form_data and form_data['edu'] == '-':
@@ -87,12 +89,15 @@ def validate_form_entries(form_data):
         errors['race'] = '**Please choose a category**'
     if 'gender' in form_data and form_data['gender'] == '-':
         errors['gender'] = '**Please choose a category**'
-    if 'c_gain' in form_data and not form_data['c_gain'].isdigit():
+    if 'c_gain' in form_data and (not form_data['c_gain'].isdigit() or not 0 <= int(form_data['c_gain']) <= 99999 or isinstance(form_data, float)):
         errors['c_gain'] = '**Please choose a category**'
-    if 'c_loss' in form_data and not form_data['c_loss'].isdigit():
+        is_valid = False
+    if 'c_loss' in form_data and (not form_data['c_loss'].isdigit() or not 0 <= int(form_data['c_loss']) <= 4356 or isinstance(form_data['c_loss'], float)):
         errors['c_loss'] = '**Please choose a category**'
-    if 'hours_per_week' in form_data and not form_data['hours_per_week'].isdigit():
+        is_valid = False
+    if 'hours_per_week' in form_data and (not form_data['hours_per_week'].isdigit() or not 1 <= int(form_data['hours_per_week']) <= 99 or isinstance(form_data['hours_per_week'], float)):
         errors['hours_per_week'] = '**Please enter a valid number**'
+        is_valid = False
     if 'native-country' in form_data and form_data['native-country'] == '-':
         errors['native-country'] = '**Please select a category**'
 
@@ -139,6 +144,7 @@ def result():
             logging.debug('error_message accessed...')
             form_data = request.form.to_dict()
             print('form_data that gets passed to error in entry template: ', form_data)
+            print('errors json fields: ', errors_json)
             return render_template('model.html',
                                    form_data=form_data,
                                    errors_json=errors_json,
@@ -159,5 +165,6 @@ if __name__ == '__main__':
 
     # Development server
     app.run(debug=True, port=5000)
-    # # Start application
+
+    # Start application
     # FlaskApplication(None, None).run()

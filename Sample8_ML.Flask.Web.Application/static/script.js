@@ -47,13 +47,14 @@ function hidePrediction() {
 // Real-time validation for Age
 function validateAge() {
     var ageInput = document.getElementById('age');
-    var age = parseInt(ageInput.value, 10);
-    if (isAlpha(age) || age < 17 || age > 90) {
+    var age = parseFloat(ageInput.value, 10);
+    var isDecimal = ageInput.value.indexOf('.') !== -1;
+    if (isAlpha(age) || age < 17 || age > 90 || isDecimal) {
         addRedBorder(ageInput);
     } else {
         removeRedBorder(ageInput);
-    }
-  }
+     }
+ }
 
 // Real-time validation for Occupational Sector
 function validateOs() {
@@ -128,8 +129,9 @@ function validateGender() {
 // Real-time validation for Capital Gain
 function validateGain() {
     var gainInput = document.getElementById('c_gain');
-    var gain = parseInt(gainInput.value, 10);
-    if (isAlpha(gain) || gain < 0 || gain > 99999) {
+    var gain = parseFloat(gainInput.value, 10);
+    var isDecimal = gainInput.value.indexOf('.') !== -1;
+    if (isAlpha(gain) || gain < 0 || gain > 99999 || isDecimal ) {
         addRedBorder(gainInput);
     } else {
         removeRedBorder(gainInput);
@@ -139,8 +141,9 @@ function validateGain() {
 // Real-time validation for Capital Loss
 function validateLoss() {
     var lossInput = document.getElementById('c_loss');
-    var loss = parseInt(lossInput.value, 10);
-    if (isAlpha(loss) || loss < 0 || loss > 4356) {
+    var loss = parseFloat(lossInput.value, 10);
+    var isDecimal = lossInput.value.indexOf('.') !== -1;
+    if (isAlpha(loss) || loss < 0 || loss > 4356 || isDecimal ) {
         addRedBorder(lossInput);
     } else {
         removeRedBorder(lossInput);
@@ -150,8 +153,9 @@ function validateLoss() {
 // Real-time validation for Hours Per Week
 function validateHours() {
     var hoursInput = document.getElementById('hours_per_week');
-    var hours = parseInt(hoursInput.value, 10);
-    if (isAlpha(hours) || hours < 1 || hours > 99) {
+    var hours = parseFloat(hoursInput.value, 10);
+    var isDecimal = hoursInput.value.indexOf('.') !== -1;
+    if (isAlpha(hours) || hours < 1 || hours > 99 || isDecimal) {
         addRedBorder(hoursInput);
     } else {
         removeRedBorder(hoursInput);
