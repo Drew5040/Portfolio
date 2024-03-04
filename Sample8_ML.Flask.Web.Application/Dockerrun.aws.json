@@ -1,13 +1,12 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "andrewodrain/web-applications:income-prediction-v0.0.1",
+    "Name": "andrewodrain/andrewodrain-portfolio-app:v0.0.1",
     "Update": "true"
   },
   "Ports": [
     {
-      "ContainerPort": "5000",
-      "HostPort": "80"
+      "ContainerPort": 5000
     }
   ],
   "Logging": "/app/logs/nginx"

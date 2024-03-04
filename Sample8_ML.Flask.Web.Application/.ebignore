@@ -16,7 +16,7 @@ env/
 dist/
 out/
 target/
-.ipynb_checkpoints/
+
 
 # Windows system files
 .DS_Store
@@ -41,7 +41,7 @@ db.sqlite*
 *.ear
 *.hprof
 *.min.js
-*.min.css
+
 
 # LaTeX files
 *.aux

@@ -1,0 +1,132 @@
+
+/* Profile Picture and Logo Styles */
+.profile-pic {
+    font-family: 'Bebas Neue', united-serif;
+    max-width: 220px;
+    width: 230px;
+    margin-top: 20px;
+    margin: 0 auto 20px;
+    display: block;
+    border: 1px outset #e76f51;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+    margin: 5px 5px; /* Reset default margins */
+    max-width: 200px;
+    width: 200px;
+    border: 3px outset #e76f51;
+    padding: 0px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8)
+}
+
+body:not(.logo) {
+    background-color: #2a9d8f;
+    cursor: pointer;
+}
+
+.business-school {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /* Add any other styles you want for this element */
+}
+
+.reason-box1 h5 {
+    background-image: url('analytical.emoji.png'); /* Replace with the path to your emoji */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 75px 75px;
+    padding: 30px 0px;
+}
+
+.reason-box1 {
+    text-align: center;
+    max-width: 500px;
+    padding: 15px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background-color: #ddb892;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+    border-radius: 2px;
+    border: 3px outset #e76f51;
+}
+
+.down-arrow {
+    text-align: center; /* Center the arrow horizontally */
+    margin: 20px 0; /* Add some vertical space around the arrow */
+}
+
+.down-arrow img {
+    width: 125px; /* Adjust based on your preferred size */
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
+    background-color: #77bfa3;
+    border-radius: 20px;
+}
+
+@media (min-width: 768px) {
+    /* Hide the down arrow on larger screens where the boxes are side by side */
+    .down-arrow {
+        display: none;
+    }
+}
+
+
+.reason-box2 h5 {
+    background-image: url('handshake.emoji.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 110px 75px;
+    padding: 30px 0px;
+}
+
+.reason-box2 {
+    text-align: center;
+    max-width: 500px;
+    padding: 15px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background-color: #ddb892;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+    border-radius: 2px;
+    border: 3px outset #e76f51;
+}
+
+.reason-box3 h5 {
+    background-image: url('strong.emoji.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80px 80px;
+    padding: 30px 0px;
+}
+
+
+.reason-box3 {
+    text-align: center;
+    max-width: 500px;
+    padding: 15px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    background-color: #ddb892;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+    border-radius: 2px;
+    border: 3px outset #e76f51;
+}
+
+.diamond-bullets {
+    list-style: none;
+    padding: 0;
+    margin-top; 10px
+    margin-bottom: 10px;
+}
+
+.diamond-bullets span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0 20px;
+    font-size: 20px;
+    color: #a9def9;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgb(0.0, 0.0, 0.5);
+    line-height: 20px;
+}

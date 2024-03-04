@@ -1,0 +1,29 @@
+
+
+.project-overview {
+    background-color: #f5f5f5; /* Light grey background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    margin: 90px auto; /* Centering the box */
+    max-width: 800px; /* Max width for readability */
+}
+
+.content-wrapper {
+    color: #333; /* Dark grey text for contrast */
+    line-height: 1.6; /* Improve readability */
+}
+
+.content-wrapper p {
+    text-align: justify; /* Justify text for a clean look */
+    padding: 0 15px; /* Padding for text inside wrapper */
+}
+
+.content-wrapper p b {
+    color: #22333b; /* Slightly darker color for bold text */
+}
+
+body:not(.project-overview) {
+    background-color: #2a9d8f;
+    cursor: pointer;
+}

@@ -1,0 +1,281 @@
+
+<!-- Inherit: "index.html" -->
+{% extends "index.html" %}
+
+<!-- Tab title -->
+{% block title %}
+ Machine Learning: Application
+{% endblock %}
+
+<!-- Links -->
+{% block links %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='model.css') }}">
+{% endblock %}
+
+<!-- Start: page content -->
+{% block content %}
+
+<!--Start: Responsive Container -->
+<div class="container-fluid mt-5 content-above-footer">
+    <div class="row">
+
+        <!-- Page Header -->
+        <div class="model-page-header">
+            <h1 style="color: #e3d5ca; text-shadow: 2px 2px 5px rgb(0.0, 0.0, 0.5); margin-top: 2vh"><b>Project: Machine Learning Web Application</b></h1>
+        </div>
+
+        <!-- Logos -->
+        <div class="col-xs-6">
+            <div class="text-center">
+                <img class="logos" src="{{ url_for('static', filename='bootstrap.logo.png') }}" alt="bootstrap.logo">
+                <img class="logos" src="{{ url_for('static', filename='docker.logo.png') }}" alt="docker.logo">
+                <img class="logos" src="{{ url_for('static', filename='flask.logo.png') }}" alt="flask.logo">
+                <img class="logos" src="{{ url_for('static', filename='trinity.html.js.css.png') }}" alt="trinity.logo">
+                <img class="logos" src="{{ url_for('static', filename='python.logo.png') }}" alt="python.logo">
+            </div>
+        </div>
+
+        <!-- Header: Prediction Box -->
+        <h2 class="prediction-header">Your Income Is:</h2>
+
+        <!-- Prediction Box -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="prediction-box" id="prediction">
+                        <h1>{{ prediction }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Start: Form -->
+        <div class="col-xs-12">
+            <div class="form-container">
+
+                <h3 style="color: #69140e; padding: 10px;">Income Prediction Form</h3>
+
+                <!-- Message -->
+                <div id="message" style="color: red; text-align: center;">{{ message }}</div>
+
+                <!-- Error Message -->
+                {% if error_message %}
+                <div id="error-message" style="color: red; text-align: center;">{{ error_message }}</div>
+                {% endif %}
+
+                <!-- Form Contents -->
+            <form id="predictionForm" method="POST" onsubmit="return validateForm(event)">
+
+                <!-- Age -->
+                 <div class="form-group" style="position: relative;">
+                    <label for="age">Age</label>
+                    <input class="error-input" type="text" id="age" name="age" value="{% if form_data %}{{ form_data.get('age', '') }}{% endif %}"> <small>[17-90]</small>
+                 </div>
+                 <br>
+
+                <!-- Occupational Sector -->
+                <div class="form-group" style="position: relative;">
+                    <label for="w_class">Occupational Sector</label>
+                        <select class="error-input" id="w_class" name="w_class">
+                            <option value="-" {% if form_data and form_data.get('w_class', '') == '-' %}selected='selected'{% endif %}>-</option>
+                            <option value="0" {% if form_data and form_data.get('w_class', '') == '0' %}selected='selected'{% endif %}>Federal-Gov</option>
+                            <option value="1" {% if form_data and form_data.get('w_class', '') == '1' %}selected='selected'{% endif %}>Local-Gov</option>
+                            <option value="2" {% if form_data and form_data.get('w_class', '') == '2' %}selected='selected'{% endif %}>Never-Worked</option>
+                            <option value="3" {% if form_data and form_data.get('w_class', '') == '3' %}selected='selected'{% endif %}>Private</option>
+                            <option value="4" {% if form_data and form_data.get('w_class', '') == '4' %}selected='selected'{% endif %}>Own Business/INC.</option>
+                            <option value="5" {% if form_data and form_data.get('w_class', '') == '5' %}selected='selected'{% endif %}>Own Business/Not INC.</option>
+                            <option value="6" {% if form_data and form_data.get('w_class', '') == '6' %}selected='selected'{% endif %}>State-Gov</option>
+                            <option value="7" {% if form_data and form_data.get('w_class', '') == '7' %}selected='selected'{% endif %}>Volunteer/Intern</option>
+                        </select>
+                </div>
+                <br>
+
+                <!-- Education -->
+                <div class="form-group" style="position: relative;">
+                    <label for="edu">Education</label>
+                        <select class="error-input" id="edu" name="edu">
+                            <option value="-"  {% if form_data and form_data.get('edu', '') == '-' %}selected='selected'{% endif %}>-</option>
+                            <option value="0"  {% if form_data and form_data.get('edu', '') == '0' %}selected='selected'{% endif %}>10th</option>
+                            <option value="1"  {% if form_data and form_data.get('edu', '') == '1' %}selected='selected'{% endif %}>11th</option>
+                            <option value="2"  {% if form_data and form_data.get('edu', '') == '2' %}selected='selected'{% endif %}>12th</option>
+                            <option value="3"  {% if form_data and form_data.get('edu', '') == '3' %}selected='selected'{% endif %}>1st-4th</option>
+                            <option value="4"  {% if form_data and form_data.get('edu', '') == '4' %}selected='selected'{% endif %}>5th-6th</option>
+                            <option value="5"  {% if form_data and form_data.get('edu', '') == '5' %}selected='selected'{% endif %}>7th-8th</option>
+                            <option value="6"  {% if form_data and form_data.get('edu', '') == '6' %}selected='selected'{% endif %}>9th</option>
+                            <option value="7"  {% if form_data and form_data.get('edu', '') == '7' %}selected='selected'{% endif %}>Associate</option>
+                            <option value="8"  {% if form_data and form_data.get('edu', '') == '8' %}selected='selected'{% endif %}>Vocational</option>
+                            <option value="9"  {% if form_data and form_data.get('edu', '') == '9' %}selected='selected'{% endif %}>Bachelors</option>
+                            <option value="10" {% if form_data and form_data.get('edu', '') == '10' %}selected='selected'{% endif %}>Doctorate</option>
+                            <option value="11" {% if form_data and form_data.get('edu', '') == '11' %}selected='selected'{% endif %}>HS-Grad</option>
+                            <option value="12" {% if form_data and form_data.get('edu', '') == '12' %}selected='selected'{% endif %}>Masters</option>
+                            <option value="13" {% if form_data and form_data.get('edu', '') == '13' %}selected='selected'{% endif %}>Preschool</option>
+                            <option value="14" {% if form_data and form_data.get('edu', '') == '14' %}selected='selected'{% endif %}>Prof-School</option>
+                            <option value="15" {% if form_data and form_data.get('edu', '') == '15' %}selected='selected'{% endif %}>Some-College</option>
+                        </select>
+                </div>
+                <br>
+
+                <!-- Marital Status -->
+                <div class="form-group" style="position:relative;">
+                    <label for="marital_stat">Marital Status</label>
+                        <select class="error-input" id="marital_stat" name="marital_stat">
+                            <option value="-" {% if form_data and form_data.get('marital_stat', '') == '-' %}selected='selected'{% endif %}>-</option>
+                            <option value="0" {% if form_data and form_data.get('marital_stat', '') == '0' %}selected='selected'{% endif %}>Divorced</option>
+                            <option value="1" {% if form_data and form_data.get('marital_stat', '') == '1' %}selected='selected'{% endif %}>Married</option>
+                            <option value="2" {% if form_data and form_data.get('marital_stat', '') == '2' %}selected='selected'{% endif %}>Single</option>
+                        </select>
+                </div>
+                <br>
+
+                <!-- Occupation -->
+                <div class="form-group" style="position: relative;">
+                    <label for="occupation">Occupation</label>
+                        <select class="error-input" id="occupation" name="occupation">
+                            <option value="-"  {% if form_data and form_data.get('occupation', '') == '-' %}selected='selected'{% endif %}>-</option>
+                            <option value="0"  {% if form_data and form_data.get('occupation', '') == '0' %}selected='selected'{% endif %}>Admin/Clerical</option>
+                            <option value="1"  {% if form_data and form_data.get('occupation', '') == '1' %}selected='selected'{% endif %}>Armed Forces</option>
+                            <option value="2"  {% if form_data and form_data.get('occupation', '') == '2' %}selected='selected'{% endif %}>Craftsman</option>
+                            <option value="3"  {% if form_data and form_data.get('occupation', '') == '3' %}selected='selected'{% endif %}>Managerial</option>
+                            <option value="4"  {% if form_data and form_data.get('occupation', '') == '4' %}selected='selected'{% endif %}>Farming</option>
+                            <option value="5"  {% if form_data and form_data.get('occupation', '') == '5' %}selected='selected'{% endif %}>Cleaners</option>
+                            <option value="6"  {% if form_data and form_data.get('occupation', '') == '6' %}selected='selected'{% endif %}>Machine/Inspection</option>
+                            <option value="7"  {% if form_data and form_data.get('occupation', '') == '7' %}selected='selected'{% endif %}>Other/Service</option>
+                            <option value="8"  {% if form_data and form_data.get('occupation', '') == '8' %}selected='selected'{% endif %}>Grounds Keeper</option>
+                            <option value="9"  {% if form_data and form_data.get('occupation', '') == '9' %}selected='selected'{% endif %}>Professional</option>
+                            <option value="10" {% if form_data and form_data.get('occupation', '') == '10' %}selected='selected'{% endif %}>Civil Servant</option>
+                            <option value="11" {% if form_data and form_data.get('occupation', '') == '11' %}selected='selected'{% endif %}>Sales</option>
+                            <option value="12" {% if form_data and form_data.get('occupation', '') == '12' %}selected='selected'{% endif %}>Tech Support</option>
+                            <option value="13" {% if form_data and form_data.get('occupation', '') == '13' %}selected='selected'{% endif %}>Transport</option>
+                        </select>
+                </div>
+                <br>
+
+                <!-- Relationship -->
+                <div class="form-group" style="position: relative;">
+                    <label for="relation">Relationship</label>
+                        <select class="error-input" id="relation" name="relation">
+                            <option value="-" {% if form_data and form_data.get('relation', '') == '-' %}selected='selected'{% endif %}>-</option>
+                            <option value="0" {% if form_data and form_data.get('relation', '') == '0' %}selected='selected'{% endif %}>Husband</option>
+                            <option value="1" {% if form_data and form_data.get('relation', '') == '1' %}selected='selected'{% endif %}>Not-in-family</option>
+                            <option value="2" {% if form_data and form_data.get('relation', '') == '2' %}selected='selected'{% endif %}>Other/Relative</option>
+                            <option value="3" {% if form_data and form_data.get('relation', '') == '3' %}selected='selected'{% endif %}>Own Child</option>
+                            <option value="4" {% if form_data and form_data.get('relation', '') == '4' %}selected='selected'{% endif %}>Unmarried</option>
+                            <option value="5" {% if form_data and form_data.get('relation', '') == '5' %}selected='selected'{% endif %}>Wife</option>
+                        </select>
+                </div>
+                <br>
+
+                <!-- Race -->
+                <div class="form-group" style="position: relative;">
+                    <label for="race">Race</label>
+                        <select class="error-input" id="race" name="race">
+                            <option value="-" {% if form_data and form_data.get('race', '') == '-' %}selected='selected'{% endif %}>-</option>
+                            <option value="0" {% if form_data and form_data.get('race', '') == '0' %}selected='selected'{% endif %}>American Indian/Eskimo</option>
+                            <option value="1" {% if form_data and form_data.get('race', '') == '1' %}selected='selected'{% endif %}>Asian Pacific Islander</option>
+                            <option value="2" {% if form_data and form_data.get('race', '') == '2' %}selected='selected'{% endif %}>Black</option>
+                            <option value="3" {% if form_data and form_data.get('race', '') == '3' %}selected='selected'{% endif %}>Other</option>
+                            <option value="4" {% if form_data and form_data.get('race', '') == '4' %}selected='selected'{% endif %}>White</option>
+                        </select>
+                </div>
+                <br>
+
+                <!-- Gender -->
+                <div class="form-group" style="position: relative;">
+                    <label for="gender">Gender</label>
+                        <select class="error-input" id="gender" name="gender">
+                            <option value="-" {% if form_data and form_data.get('gender', '') == '-' %}selected='selected'{% endif %}>-</option>
+                            <option value="0" {% if form_data and form_data.get('gender', '') == '0' %}selected='selected'{% endif %}>Female</option>
+                            <option value="1" {% if form_data and form_data.get('gender', '') == '1' %}selected='selected'{% endif %}>Male</option>
+                        </select>
+                </div>
+                <br>
+
+                <!-- Capital Gain -->
+                <div class="form-group" style="position: relative;">
+                     <label for="c_gain">Capital Gain </label>
+                        <input class="error-input" type="text" id="c_gain" name="c_gain" value="{% if form_data %}{{ form_data.get('c_gain', '') }}{% endif %}"> <small>[0-99999]</small>
+                </div>
+                <br>
+
+                <!-- Capital Loss -->
+                <div class="form-group" style="position: relative;">
+                    <label for="c_loss">Capital Loss </label>
+                        <input class="error-input" type="text" id="c_loss" name="c_loss" value="{% if form_data %}{{ form_data.get('c_loss', '') }}{% endif %}"> <small>[0-4356]</small>
+                </div>
+                <br>
+
+                <!-- Hours Per Week -->
+                <div class="form-group" style="position: relative;">
+                    <label for="hours_per_week">Hours per Week </label>
+                        <input class="error-input" type="text" id="hours_per_week" name="hours_per_week" value="{% if form_data %}{{ form_data.get('hours_per_week', '') }}{% endif %}"> [1-99]
+                </div>
+                <br>
+
+                <!-- Native Country -->
+                <div class="form-group" style="position: relative;">
+                    <label for="native-country">Native Country</label>
+                        <select class="error-input" id="native-country" name="native-country">
+                            <option value="-"  {% if form_data and form_data.get('native-country', '') == '-' %}selected='selected'{% endif %}>-</option>
+                            <option value="0"  {% if form_data and form_data.get('native-country', '') == '0' %}selected='selected'{% endif %}>Cambodia</option>
+                            <option value="1"  {% if form_data and form_data.get('native-country', '') == '1' %}selected='selected'{% endif %}>Canada</option>
+                            <option value="2"  {% if form_data and form_data.get('native-country', '') == '2' %}selected='selected'{% endif %}>China</option>
+                            <option value="3"  {% if form_data and form_data.get('native-country', '') == '3' %}selected='selected'{% endif %}>Columbia</option>
+                            <option value="4"  {% if form_data and form_data.get('native-country', '') == '4' %}selected='selected'{% endif %}>Cuba</option>
+                            <option value="5"  {% if form_data and form_data.get('native-country', '') == '5' %}selected='selected'{% endif %}>Dominican Republic</option>
+                            <option value="6"  {% if form_data and form_data.get('native-country', '') == '6' %}selected='selected'{% endif %}>Ecuador</option>
+                            <option value="7"  {% if form_data and form_data.get('native-country', '') == '7' %}selected='selected'{% endif %}>El Salvador</option>
+                            <option value="8"  {% if form_data and form_data.get('native-country', '') == '8' %}selected='selected'{% endif %}>England</option>
+                            <option value="9"  {% if form_data and form_data.get('native-country', '') == '9' %}selected='selected'{% endif %}>France</option>
+                            <option value="10" {% if form_data and form_data.get('native-country', '') == '10' %}selected='selected'{% endif %}>Germany</option>
+                            <option value="11" {% if form_data and form_data.get('native-country', '') == '11' %}selected='selected'{% endif %}>Greece</option>
+                            <option value="12" {% if form_data and form_data.get('native-country', '') == '12' %}selected='selected'{% endif %}>Guatemala</option>
+                            <option value="13" {% if form_data and form_data.get('native-country', '') == '13' %}selected='selected'{% endif %}>Haiti</option>
+                            <option value="14" {% if form_data and form_data.get('native-country', '') == '14' %}selected='selected'{% endif %}>Netherlands</option>
+                            <option value="15" {% if form_data and form_data.get('native-country', '') == '15' %}selected='selected'{% endif %}>Honduras</option>
+                            <option value="16" {% if form_data and form_data.get('native-country', '') == '16' %}selected='selected'{% endif %}>HongKong</option>
+                            <option value="17" {% if form_data and form_data.get('native-country', '') == '17' %}selected='selected'{% endif %}>Hungary</option>
+                            <option value="18" {% if form_data and form_data.get('native-country', '') == '18' %}selected='selected'{% endif %}>India</option>
+                            <option value="19" {% if form_data and form_data.get('native-country', '') == '19' %}selected='selected'{% endif %}>Iran</option>
+                            <option value="20" {% if form_data and form_data.get('native-country', '') == '20' %}selected='selected'{% endif %}>Ireland</option>
+                            <option value="21" {% if form_data and form_data.get('native-country', '') == '21' %}selected='selected'{% endif %}>Italy</option>
+                            <option value="22" {% if form_data and form_data.get('native-country', '') == '22' %}selected='selected'{% endif %}>Jamaica</option>
+                            <option value="23" {% if form_data and form_data.get('native-country', '') == '23' %}selected='selected'{% endif %}>Japan</option>
+                            <option value="24" {% if form_data and form_data.get('native-country', '') == '24' %}selected='selected'{% endif %}>Laos</option>
+                            <option value="25" {% if form_data and form_data.get('native-country', '') == '25' %}selected='selected'{% endif %}>Mexico</option>
+                            <option value="26" {% if form_data and form_data.get('native-country', '') == '26' %}selected='selected'{% endif %}>Nicaragua</option>
+                            <option value="27" {% if form_data and form_data.get('native-country', '') == '27' %}selected='selected'{% endif %}>Outlying-US(Guam-SUVI-etc)</option>
+                            <option value="28" {% if form_data and form_data.get('native-country', '') == '28' %}selected='selected'{% endif %}>Peru</option>
+                            <option value="29" {% if form_data and form_data.get('native-country', '') == '29' %}selected='selected'{% endif %}>Philippines</option>
+                            <option value="30" {% if form_data and form_data.get('native-country', '') == '30' %}selected='selected'{% endif %}>Poland</option>
+                            <option value="31" {% if form_data and form_data.get('native-country', '') == '31' %}selected='selected'{% endif %}>Portugal</option>
+                            <option value="32" {% if form_data and form_data.get('native-country', '') == '32' %}selected='selected'{% endif %}>Puerto-Rico</option>
+                            <option value="33" {% if form_data and form_data.get('native-country', '') == '33' %}selected='selected'{% endif %}>Scotland</option>
+                            <option value="34" {% if form_data and form_data.get('native-country', '') == '34' %}selected='selected'{% endif %}>South</option>
+                            <option value="35" {% if form_data and form_data.get('native-country', '') == '35' %}selected='selected'{% endif %}>Taiwan</option>
+                            <option value="36" {% if form_data and form_data.get('native-country', '') == '36' %}selected='selected'{% endif %}>Thailand</option>
+                            <option value="37" {% if form_data and form_data.get('native-country', '') == '37' %}selected='selected'{% endif %}>Trinidad & Tobago</option>
+                            <option value="38" {% if form_data and form_data.get('native-country', '') == '38' %}selected='selected'{% endif %}>United States</option>
+                            <option value="39" {% if form_data and form_data.get('native-country', '') == '39' %}selected='selected'{% endif %}>Vietnam</option>
+                            <option value="40" {% if form_data and form_data.get('native-country', '') == '40' %}selected='selected'{% endif %}>Yugoslavia</option>
+                        </select>
+                </div>
+                <br>
+
+                <!-- Submit Button -->
+                <input id="submitButton" type="submit" value="Submit" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">
+
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Link to JavaScript -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<!-- Pass 'errors_json' dictionary to script.js -->
+<script type="text/javascript">var errors = JSON.parse('{{ errors_json|safe }}');</script>
+
+<!-- End: Content-->
+{% endblock %}
