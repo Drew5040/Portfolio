@@ -22,7 +22,7 @@
 
         <!-- Page Header -->
         <div class="model-page-header">
-            <h1 style="color: #e3d5ca; text-shadow: 2px 2px 5px rgb(0.0, 0.0, 0.5); margin-top: 2vh"><b>Project: Machine Learning Web Application</b></h1>
+            <h1 ><b>Project: Machine Learning Web Application</b></h1>
         </div>
 
         <!-- Logos -->
@@ -36,19 +36,18 @@
             </div>
         </div>
 
-        <!-- Header: Prediction Box -->
-        <h2 class="prediction-header">Your Income Is:</h2>
-
-        <!-- Prediction Box -->
+         <!-- Prediction Box -->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-6">
                     <div class="prediction-box" id="prediction">
-                        <h1>{{ prediction }}</h1>
+                        <div class="prediction-label"><b>PREDICTION:</b></div>
+                        <div class="prediction-result">{{ prediction }}</div>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <!--Start: Form -->
         <div class="col-xs-12">
@@ -69,14 +68,14 @@
 
                 <!-- Age -->
                  <div class="form-group" style="position: relative;">
-                    <label for="age">Age</label>
-                    <input class="error-input" type="text" id="age" name="age" value="{% if form_data %}{{ form_data.get('age', '') }}{% endif %}"> <small>[17-90]</small>
+                    <small id="star0" class="error-stars" >* </small><label for="age">Age</label><small> [17yrs-90yrs]</small>
+                    <input class="error-input" type="text" id="age" name="age" value="{% if form_data %}{{ form_data.get('age', '') }}{% endif %}">
                  </div>
                  <br>
 
                 <!-- Occupational Sector -->
                 <div class="form-group" style="position: relative;">
-                    <label for="w_class">Occupational Sector</label>
+                    <small id="star1" class="error-stars">* </small><label for="w_class">Occupational Sector</label>
                         <select class="error-input" id="w_class" name="w_class">
                             <option value="-" {% if form_data and form_data.get('w_class', '') == '-' %}selected='selected'{% endif %}>-</option>
                             <option value="0" {% if form_data and form_data.get('w_class', '') == '0' %}selected='selected'{% endif %}>Federal-Gov</option>
@@ -93,7 +92,7 @@
 
                 <!-- Education -->
                 <div class="form-group" style="position: relative;">
-                    <label for="edu">Education</label>
+                    <small id="star2" class="error-stars">* </small><label for="edu">Education</label>
                         <select class="error-input" id="edu" name="edu">
                             <option value="-"  {% if form_data and form_data.get('edu', '') == '-' %}selected='selected'{% endif %}>-</option>
                             <option value="0"  {% if form_data and form_data.get('edu', '') == '0' %}selected='selected'{% endif %}>10th</option>
@@ -118,7 +117,7 @@
 
                 <!-- Marital Status -->
                 <div class="form-group" style="position:relative;">
-                    <label for="marital_stat">Marital Status</label>
+                    <small id="star3" class="error-stars">* </small><label for="marital_stat">Marital Status</label>
                         <select class="error-input" id="marital_stat" name="marital_stat">
                             <option value="-" {% if form_data and form_data.get('marital_stat', '') == '-' %}selected='selected'{% endif %}>-</option>
                             <option value="0" {% if form_data and form_data.get('marital_stat', '') == '0' %}selected='selected'{% endif %}>Divorced</option>
@@ -130,7 +129,7 @@
 
                 <!-- Occupation -->
                 <div class="form-group" style="position: relative;">
-                    <label for="occupation">Occupation</label>
+                    <small id="star4" class="error-stars">* </small><label for="occupation">Occupation</label>
                         <select class="error-input" id="occupation" name="occupation">
                             <option value="-"  {% if form_data and form_data.get('occupation', '') == '-' %}selected='selected'{% endif %}>-</option>
                             <option value="0"  {% if form_data and form_data.get('occupation', '') == '0' %}selected='selected'{% endif %}>Admin/Clerical</option>
@@ -153,7 +152,7 @@
 
                 <!-- Relationship -->
                 <div class="form-group" style="position: relative;">
-                    <label for="relation">Relationship</label>
+                    <small id="star5" class="error-stars">* </small><label for="relation">Relationship</label>
                         <select class="error-input" id="relation" name="relation">
                             <option value="-" {% if form_data and form_data.get('relation', '') == '-' %}selected='selected'{% endif %}>-</option>
                             <option value="0" {% if form_data and form_data.get('relation', '') == '0' %}selected='selected'{% endif %}>Husband</option>
@@ -168,7 +167,7 @@
 
                 <!-- Race -->
                 <div class="form-group" style="position: relative;">
-                    <label for="race">Race</label>
+                    <small id="star6" class="error-stars">* </small><label for="race">Race</label>
                         <select class="error-input" id="race" name="race">
                             <option value="-" {% if form_data and form_data.get('race', '') == '-' %}selected='selected'{% endif %}>-</option>
                             <option value="0" {% if form_data and form_data.get('race', '') == '0' %}selected='selected'{% endif %}>American Indian/Eskimo</option>
@@ -182,7 +181,7 @@
 
                 <!-- Gender -->
                 <div class="form-group" style="position: relative;">
-                    <label for="gender">Gender</label>
+                    <small id="star7" class="error-stars">* </small><label for="gender">Gender</label>
                         <select class="error-input" id="gender" name="gender">
                             <option value="-" {% if form_data and form_data.get('gender', '') == '-' %}selected='selected'{% endif %}>-</option>
                             <option value="0" {% if form_data and form_data.get('gender', '') == '0' %}selected='selected'{% endif %}>Female</option>
@@ -193,28 +192,28 @@
 
                 <!-- Capital Gain -->
                 <div class="form-group" style="position: relative;">
-                     <label for="c_gain">Capital Gain </label>
-                        <input class="error-input" type="text" id="c_gain" name="c_gain" value="{% if form_data %}{{ form_data.get('c_gain', '') }}{% endif %}"> <small>[0-99999]</small>
+                     <small id="star8" class="error-stars">* </small><label for="c_gain">Capital Gain</label><small> [$0-$99999]</small>
+                        <input class="error-input" type="text" id="c_gain" name="c_gain" value="{% if form_data %}{{ form_data.get('c_gain', '') }}{% endif %}">
                 </div>
                 <br>
 
                 <!-- Capital Loss -->
                 <div class="form-group" style="position: relative;">
-                    <label for="c_loss">Capital Loss </label>
-                        <input class="error-input" type="text" id="c_loss" name="c_loss" value="{% if form_data %}{{ form_data.get('c_loss', '') }}{% endif %}"> <small>[0-4356]</small>
+                    <small id="star9" class="error-stars">* </small><label for="c_loss">Capital Loss</label><small> [$0-$4356]</small>
+                        <input class="error-input" type="text" id="c_loss" name="c_loss" value="{% if form_data %}{{ form_data.get('c_loss', '') }}{% endif %}">
                 </div>
                 <br>
 
                 <!-- Hours Per Week -->
                 <div class="form-group" style="position: relative;">
-                    <label for="hours_per_week">Hours per Week </label>
-                        <input class="error-input" type="text" id="hours_per_week" name="hours_per_week" value="{% if form_data %}{{ form_data.get('hours_per_week', '') }}{% endif %}"> [1-99]
+                    <small id="star10" class="error-stars">* </small><label for="hours_per_week">Hours per Week </label><small> [1hr-99hrs]</small>
+                        <input class="error-input" type="text" id="hours_per_week" name="hours_per_week" value="{% if form_data %}{{ form_data.get('hours_per_week', '') }}{% endif %}">
                 </div>
                 <br>
 
                 <!-- Native Country -->
                 <div class="form-group" style="position: relative;">
-                    <label for="native-country">Native Country</label>
+                    <small id="star11" class="error-stars">* </small><label for="native-country">Native Country</label>
                         <select class="error-input" id="native-country" name="native-country">
                             <option value="-"  {% if form_data and form_data.get('native-country', '') == '-' %}selected='selected'{% endif %}>-</option>
                             <option value="0"  {% if form_data and form_data.get('native-country', '') == '0' %}selected='selected'{% endif %}>Cambodia</option>
@@ -275,7 +274,7 @@
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 <!-- Pass 'errors_json' dictionary to script.js -->
-<script type="text/javascript">var errors = JSON.parse('{{ errors_json|safe }}');</script>
+<script type="text/javascript">var errors = JSON.parse('{{ errors_json | safe }}');</script>
 
 <!-- End: Content-->
 {% endblock %}
