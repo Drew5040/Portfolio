@@ -12,11 +12,10 @@ RUN pip install --upgrade pip
 # Install build dependencies for numpy
 RUN apt-get update && \
     apt-get install -y python3-dev
-RUN apt-get update && apt-get install -y nginx
+RUN apt-get update
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Create directories for server and framework logs
-RUN mkdir -p /app/logs/nginx
 RUN mkdir -p /app/logs/gunicorn
 RUN mkdir /app/logs/flask
 
@@ -24,7 +23,7 @@ RUN mkdir /app/logs/flask
 RUN touch /app/logs/gunicorn/access.log
 RUN touch /app/logs/gunicorn/error.log
 RUN touch /app/logs/flask/error.log
-RUN touch /app/logs/nginx/error.log
+
 
 # Set the FLASK_APP environment variable
 ENV FLASK_APP=app.py
