@@ -1,5 +1,7 @@
 import logging
 from flask import request, render_template, Flask
+from flask_talisman import Talisman
+from config import Config
 # from gunicorn.app.base import Application
 import numpy as np
 import pickle
@@ -71,7 +73,9 @@ def validate_form_entries(form_data):
 
     print(errors)
     # Add any additional validation checks here, for example, checking if age is a number
-    if "age" in form_data and (not form_data["age"].isdigit() or not 17 <= int(form_data["age"]) <= 90 or isinstance(form_data["age"], float)):
+    if "age" in form_data and (
+            not form_data["age"].isdigit() or not 17 <= int(form_data["age"]) <= 90 or isinstance(form_data["age"],
+                                                                                                  float)):
         errors["age"] = "**Age must be a valid number**"
         is_valid = False
     if "w_class" in form_data and form_data["w_class"] == "-":
@@ -88,13 +92,19 @@ def validate_form_entries(form_data):
         errors["race"] = "**Please choose a category**"
     if "gender" in form_data and form_data["gender"] == "-":
         errors["gender"] = "**Please choose a category**"
-    if "c_gain" in form_data and (not form_data["c_gain"].isdigit() or not 0 <= int(form_data["c_gain"]) <= 99999 or isinstance(form_data, float)):
+    if "c_gain" in form_data and (
+            not form_data["c_gain"].isdigit() or not 0 <= int(form_data["c_gain"]) <= 99999 or isinstance(form_data,
+                                                                                                          float)):
         errors["c_gain"] = "**Please choose a category**"
         is_valid = False
-    if "c_loss" in form_data and (not form_data["c_loss"].isdigit() or not 0 <= int(form_data["c_loss"]) <= 4356 or isinstance(form_data["c_loss"], float)):
+    if "c_loss" in form_data and (
+            not form_data["c_loss"].isdigit() or not 0 <= int(form_data["c_loss"]) <= 4356 or isinstance(
+        form_data["c_loss"], float)):
         errors["c_loss"] = "**Please choose a category**"
         is_valid = False
-    if "hours_per_week" in form_data and (not form_data["hours_per_week"].isdigit() or not 1 <= int(form_data["hours_per_week"]) <= 99 or isinstance(form_data["hours_per_week"], float)):
+    if "hours_per_week" in form_data and (
+            not form_data["hours_per_week"].isdigit() or not 1 <= int(form_data["hours_per_week"]) <= 99 or isinstance(
+        form_data["hours_per_week"], float)):
         errors["hours_per_week"] = "**Please enter a valid number**"
         is_valid = False
     if "native-country" in form_data and form_data["native-country"] == "-":
@@ -133,7 +143,7 @@ def result():
             if int(results) == 1:
                 prediction = "**Income more than 50K**"
             else:
-                prediction = "**Income less than 50K**"
+                prediction = "\n**Income less than 50K**"
 
             logging.debug(f"Prediction result: {prediction}")
 
@@ -163,7 +173,7 @@ if __name__ == '__main__':
     logging.debug('main() accessed ...')
 
     # Development server
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)
 
     # Start application
     # FlaskApplication(None, None).run()

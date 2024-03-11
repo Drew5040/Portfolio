@@ -1,6 +1,8 @@
 import logging
 from flask import request, render_template, Flask
+from flask_talisman import Talisman
 from gunicorn.app.base import Application
+from config import Config
 import numpy as np
 import pickle
 import json
@@ -11,6 +13,11 @@ logging.basicConfig(filename='logs/flask/error.log', level=logging.DEBUG, format
 
 # Set app instance
 app = Flask(__name__)
+
+# Set session variables
+app.config.from_object(Config)
+
+# Set the Talisman
 
 
 # Set homepage route
@@ -147,6 +154,11 @@ def result():
                                    errors_json=errors_json,
                                    error_message='**Please fill out all required fields**')
 
+@app.route('/health')
+def health():
+    return 200, 'OK'
+
+
 
 class FlaskApplication(Application):
     def __init__(self, parser, opts, *args):
@@ -160,8 +172,8 @@ if __name__ == '__main__':
     # Log that main() is accessed
     logging.debug('main() accessed ...')
 
-    # Start application
+    # # Start application
     FlaskApplication(None, None).run()
 
     # Development server
-    # app.run(debug=True, port=5000)
+    #app.run(debug=True, port=5000)
