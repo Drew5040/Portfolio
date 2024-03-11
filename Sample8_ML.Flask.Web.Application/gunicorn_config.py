@@ -37,4 +37,4 @@ raw_env = [
 ]
 
 # Specify the Flask application to be run by Gunicorn
-default_proc_name = 'app:FlaskApplication'
+default_proc_name = 'app:app'

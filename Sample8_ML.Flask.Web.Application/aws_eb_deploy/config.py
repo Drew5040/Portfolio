@@ -1,0 +1,14 @@
+import os
+
+
+class Config:
+    SECRET_KEY = os.getenv('SECRET_KEY', 'disco_king')
+    SESSION_COOKIE_SECURE = True
+    REMEMBER_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    MAX_CONTENT_LENGTH = 10 * 1024 * 1024
+    WTF_CSRF_ENABLED = True
+    RATELIMIT_DEFAULT = '50'
+    LOGGING_LEVEL = 'INFO'
+    PROPAGATE_EXCEPTIONS = False

@@ -6,8 +6,10 @@
   },
   "Ports": [
     {
-      "ContainerPort": 5000
+      "ContainerPort": 80
+    },
+    {
+      "ContainerPort": 443
     }
-  ],
-  "Logging": "/app/logs/nginx"
+  ]
 }

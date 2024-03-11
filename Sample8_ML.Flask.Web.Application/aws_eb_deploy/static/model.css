@@ -26,9 +26,27 @@
     line-height: 1.5;
 }
 
+@media (max-width: 1366px) {
+    .model-page-header h1 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .model-page-header h1 {
+        font-size: 36px;
+    }
+}
+
 @media (max-width: 1180px) {
     .model-page-header h1 {
-        font-size: 20px;
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 1138px) {
+    .model-page-header h1 {
+        font-size: 32px;
     }
 }
 
@@ -63,19 +81,31 @@
 
 @media (max-width: 1366px) {
     .logos {
-        max-width: 100px;
+        max-width: 170px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .logos {
+        max-width: 150px;
     }
 }
 
 @media (max-width: 1180px) {
     .logos {
-        max-width: 100px;
+        max-width: 170px;
+    }
+}
+
+@media(max-width: 1138px) {
+    .logos {
+        max-width: 170px;
     }
 }
 
 @media (max-width: 1024px) {
     .logos {
-        max-width: 130px;
+        max-width: 170px;
     }
 }
 
@@ -140,6 +170,12 @@
     }
 }
 
+@media (max-width: 533px) {
+    .logos {
+        max-width: 80px;
+    }
+}
+
 @media (max-width: 430px) {
     .logos {
         margin-top: 25px;
@@ -176,6 +212,7 @@ body:not(.form-container){
     text-align: center;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     max-width: 500px;
+    min-width: 250px;
     padding: 20px;
     margin-top: 50px;
     margin-bottom: 10px;
@@ -217,12 +254,6 @@ body:not(.form-container){
 @media (max-width: 1366px) {
     .prediction-label {
         font-size: 24px;
-    }
-}
-
-@media (max-width: 1366px) {
-    .prediction-result {
-        font-size: 20px;
     }
 }
 
@@ -316,15 +347,69 @@ body:not(.form-container){
     }
 }
 
+@media (max-width: 1366px) {
+    .prediction-result {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .prediction-result {
+        font-size: 16px;
+    }
+}
+
+@media(max-width: 1138px) {
+    .prediction-result {
+        font-size: 16px;
+    }
+}
+
+@media(max-width: 1024px) {
+    .prediction-result {
+        font-size: 16px;
+    }
+}
+
+@media(max-width: 844px) {
+    .prediction-result {
+        font-size: 16px;
+    }
+}
+
 @media(max-width: 768px) {
     .prediction-result {
-        font-size: 22px;
+        font-size: 16px;
+    }
+}
+
+@media(max-width: 740px) {
+    .prediction-result {
+        font-size: 16px;
+    }
+}
+
+@media(max-width: 640px) {
+    .prediction-result {
+        font-size: 16px;
+    }
+}
+
+@media(max-width: 390px) {
+    .prediction-result {
+        font-size: 14px;
     }
 }
 
 @media(max-width: 375px) {
     .prediction-result {
-        font-size: 18px;
+        font-size: 16px;
+    }
+}
+
+@media(max-width: 360px) {
+    .prediction-result {
+        font-size: 14px;
     }
 }
 
@@ -351,7 +436,6 @@ body:not(.form-container){
     width: 100%;
     margin: 90px auto;
     padding: 20px;
-    border: 2px solid grey;
     border-radius: 20px;
     cursor: pointer;
     overflow-y: auto;
@@ -384,6 +468,18 @@ body:not(.form-container){
 @media(max-width: 280px) {
     .form-container h3 {
         font-size: 16px;
+    }
+}
+
+@media (max-width: 1366px) {
+    .form-container {
+        margin-bottom: 30vh;
+    }
+}
+
+@media (max-width: 1024px) {
+    .form-container {
+        margin-bottom: 40vh;
     }
 }
 
@@ -426,9 +522,21 @@ body:not(.form-container){
     cursor: pointer;
 }
 
+.form-container input[type='text'].error-input,
+.form-container select.error-input {
+    border-color:  #d80032;
+}
+
 .form-container input[type="text"],
 .form-container select {
-    border-width: 2px;
+    background-color: #F5F5F5;
+    width: 100%;
+    padding: 4px 8px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    height: 28px;
+    font-size: 14px;
+    border: 2px solid grey; /* Default border color */
 }
 
 input[type="submit"] {
@@ -452,15 +560,8 @@ select {
 }
 
 label {
-    display: block;
     font-weight: bold;
     margin-bottom: 5px;
-    cursor: pointer;
-}
-
-.error-input {
-    border: 10px solid #d80032;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     cursor: pointer;
 }
 

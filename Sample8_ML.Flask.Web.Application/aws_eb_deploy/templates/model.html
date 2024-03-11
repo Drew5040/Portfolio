@@ -274,7 +274,8 @@
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 <!-- Pass 'errors_json' dictionary to script.js -->
-<script type="text/javascript">var errors = JSON.parse('{{ errors_json | safe }}');</script>
+<script
+nonce="{{ csp_nonce }}"  type="text/javascript">var errors = JSON.parse('{{ errors_json | safe }}');</script>
 
 <!-- End: Content-->
 {% endblock %}

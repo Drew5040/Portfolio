@@ -1,13 +1,24 @@
 {
   "AWSEBDockerrunVersion": "1",
-  "Image": {
-    "Name": "andrewodrain/andrewodrain-portfolio-app:v0.0.1",
-    "Update": "true"
-  },
-  "Ports": [
+  "containerDefinitions": [
     {
-      "ContainerPort": 5000
+      "name": "app",
+      "image": "andrewodrain/web-applications:app-v0.0.1",
+      "essential": true
+    },
+    {
+      "name": "nginx",
+      "image": "andrewodrain/web-applications:nginx-v0.1",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80
+        }
+      ],
+      "links": [
+        "app"
+      ]
     }
-  ],
-  "Logging": "/app/logs/nginx"
+  ]
 }
