@@ -1,0 +1,194 @@
+
+/* Style for the 'contact' header */
+.contact-header-container h1 {
+    font-size: 42px;
+    text-align: center;
+    color: #FFFFFF;
+    text-shadow: 2px 2px 5px rgb(0.0, 0.0, 0.5);
+    bottom-padding; 10px;
+}
+
+
+/* Styles for the parent form container */
+.contact-form-container {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #EADFB4;
+    border-radius: 8px;
+    border: 3px outset #e76f51;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.contact-form-container label {
+    cursor: pointer;
+}
+
+/* Styles for input fields */
+.contact-form-container input[type="email"],
+.contact-form-container input[type="text"],
+.contact-form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px inset grey;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Styles for the message textarea */
+.contact-form-container textarea.message {
+    height: auto;
+    min-height: 100px;
+    resize: vertical; /* Allow vertical resizing only */
+    overflow-y: auto; /* Add vertical scrollbar if content overflows */
+    border: 2px inset black;
+    border-radius: 8px; /* Apply border radius to textarea */
+}
+
+/* Ensure the textarea expands to accommodate content when focused */
+.contact-form-container textarea.message:focus {
+    height: auto;
+}
+
+
+/* Styles for labels */
+.contact-form-container label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Styles for submit button */
+.contact-form-container button[type="submit"] {
+    font-size: 18px;
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: 0.5px solid grey;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Styles for submit button on hover */
+.contact-form-container button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.alert {
+    background-color: transparent; /* Make background transparent */
+    border: none; /* Remove border */
+    color: inherit; /* Text color matches surrounding text or set a specific color */
+    padding: 10px 0; /* Adjust padding to your preference */
+    text-align: center; /* Center the text */
+}
+
+@media (max-width: 1368px) {
+    .contact-form-container {
+        max-width: 400px;
+    }
+}
+
+
+@media (max-width: 1280px) {
+    .contact-form-container {
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 1020px) {
+    .contact-form-container {
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 800px) {
+    .contact-form-container {
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 712px) {
+    .contact-form-container {
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 600px) {
+    .contact-form-container {
+        max-width: 350px;
+    }
+}
+
+
+
+@media (max-width: 390px) {
+    .contact-form-container {
+        max-width: 220px;
+    }
+}
+
+@media (max-width: 384px) {
+    .contact-form-container {
+        max-width: 300px;
+    }
+}
+
+
+@media (max-width: 360px) {
+    .contact-form-container {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 320px) {
+    .contact-form-container {
+        max-width: 280px;
+    }
+}
+
+@media (max-width: 280px) {
+    .contact-form-container {
+        max-width: 250px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

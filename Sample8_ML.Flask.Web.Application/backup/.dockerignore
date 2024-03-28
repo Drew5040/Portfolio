@@ -68,3 +68,4 @@ db.sqlite*
 
 # Elastic Beanstalk files
 !.elasticbeanstalk/*
+

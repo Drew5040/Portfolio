@@ -1,7 +1,7 @@
 
 body:not(.project-overview) {
     background-color: #2a9d8f;
-    cursor: pointer;
+
 }
 
 .project-overview {
@@ -11,6 +11,7 @@ body:not(.project-overview) {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 90px auto;
     max-width: 800px;
+
 }
 
 @media (max-width: 1366px) {

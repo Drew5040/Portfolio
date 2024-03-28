@@ -1,40 +1,45 @@
-import os
+"""
+Gunicorn configuration file for setting various options for the server.
+"""
+
+from os import getenv
 
 # Number of worker processes
-workers = 4
+WORKERS = 4
 
 # Host and port to bind to
-bind = '0.0.0.0:{}'.format(os.getenv('PORT', 5000))
+PORT = getenv('PORT', '5000')  # Ensure default is string to match getenv expected return type
+BIND = f'0.0.0.0:{PORT}'
 
 # Worker timeout
-timeout = 30
+TIMEOUT = 30
 
 # Load application code before forking worker processes
-preload = True
+PRELOAD = True
 
 # Limit number of requests a worker will process before being restarted gracefully
-max_requests = 1000
+MAX_REQUESTS = 1000
 
 # Specify Flask app to run
-chdir = '/app'
+CHDIR = '/app'
 
 # Capture output
-capture_output = True
+CAPTURE_OUTPUT = True
 
 # Access log path in container
-accesslog = "/app/logs/gunicorn/access.log"
+ACCESSLOG = "/app/logs/gunicorn/access.log"
 
 # Error log path in container
-errorlog = "/app/logs/gunicorn/error.log"
+ERRORLOG = "/app/logs/gunicorn/error.log"
 
 # Set log format
-access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
+ACCESS_LOG_FORMAT = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 
 # Set environment variables
-raw_env = [
+RAW_ENV = [
     'FLASK_APP=app.py',
     'FLASK_ENV=production',
 ]
 
 # Specify the Flask application to be run by Gunicorn
-default_proc_name = 'app:FlaskApplication'
+DEFAULT_PROC_NAME = 'app:FlaskApplication'

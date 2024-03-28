@@ -16,7 +16,7 @@ env/
 dist/
 out/
 target/
-
+.ipynb_checkpoints/
 
 # Windows system files
 .DS_Store
@@ -41,7 +41,7 @@ db.sqlite*
 *.ear
 *.hprof
 *.min.js
-
+*.min.css
 
 # LaTeX files
 *.aux
@@ -55,7 +55,6 @@ db.sqlite*
 *.tmp
 *~
 
-
 # Csv's
 *.csv
 
@@ -67,3 +66,9 @@ db.sqlite*
 
 # Elastic Beanstalk files
 !.elasticbeanstalk/*
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+config.py
+.ebextensions

@@ -59,19 +59,20 @@ Project: About
                 is erased immediately after the user exits the page, with the exception of certain logging details that consist of matrix data, but lack
                 any identifying information, such as names or ID's. This approach ensures the utmost privacy for users during their interaction with the
                 application. To further enhance data privacy and security, and to bolster user trust, I also secured an SSL certificate via AWS Certificate Manager.
-                This critical step ensures all communication between the user's browser and the server is encrypted, safeguarding against "Man-In-The-Middle-Attacks"
+                This critical step ensures all communication between the user's browser and the server is encrypted via the HTTPS protocol, safeguarding against "Man-In-The-Middle-Attacks"
                 or eavesdropping, and data theft.
                 <br>
                 <br>
                 For efficiency, scalability, and reliability, I opted for a reverse proxy setup with an application server, employing
-                Gunicorn for the WSGI (Web Server Gateway Interface) or HTTP server that directly interacts with the web application's Python code.
-                Additionally, I utilized the high performance Nginx server within the isolated environment of the Docker container to handle client requests.
+                Gunicorn for the WSGI (Web Server Gateway Interface) that directly interacts with the web application's Python code,
+                and the high performance Nginx server which is both client facing and the initial contact for all requests sent to the site.
+                The two servers are wrapped in their own docker containers and networked together to operate as one functional unit.
                 This configuration ensures that the application can efficiently manage traffic, scale as I add more content to the site, and provide reliable access
                 to users, while maintaining a clear separation of concerns between the application processing and request handling.
                 <br>
                 <br>
                 I will soon be adding a contact form and improving the site's aesthetics as soon as the code is ready for deployment. For now, you may
-                follow the GitHub or LinkedIn links located in the navigation bar to explore more about me, or you can email me directly at <a href="mailto:andrewodrain.com?subject=Feedback&body=Hi%20there,">andrewodrain@outlook.com</a>.
+                follow the links located in the navigation bar to explore more about me, or you can email me directly at <a href="mailto:andrewodrain.com?subject=Feedback&body=Hi%20there,">andrewodrain@outlook.com</a>.
                 I would love to talk more about how my skills and experiences can benefit your organization. Thank you for your time and I hope to hear from you soon!
             </b></p>
 

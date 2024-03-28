@@ -1,10 +1,10 @@
-import os
+from os import getenv
 
 # Number of worker processes
 workers = 4
 
 # Host and port to bind to
-bind = '0.0.0.0:{}'.format(os.getenv('PORT', 5000))
+bind = '0.0.0.0:{}'.format(getenv('PORT', 5000))
 
 # Worker timeout
 timeout = 30
@@ -37,4 +37,4 @@ raw_env = [
 ]
 
 # Specify the Flask application to be run by Gunicorn
-default_proc_name = 'app:app'
+default_proc_name = 'app:FlaskApplication'
