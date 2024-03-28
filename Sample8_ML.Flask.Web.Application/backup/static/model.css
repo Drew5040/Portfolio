@@ -20,7 +20,7 @@
 .model-page-header h1 {
     margin-top: 2vh;
     font-size: 42px;
-    color: #e3d5ca;
+    color: #FFFFFF;
     text-shadow: 2px 2px 5px rgb(0, 0, 0.5);
     text-align: center;
     line-height: 1.5;
@@ -224,6 +224,14 @@ body:not(.form-container){
     background-color: #bde0fe;
 }
 
+.prediction-label {
+    color: #FFFFFF;
+     text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+
+}
+
+
+
 @media (max-width: 1366px) {
     .prediction-box {
         width: 50%;
@@ -256,8 +264,6 @@ body:not(.form-container){
         font-size: 24px;
     }
 }
-
-
 
 @media (max-width: 1180px) {
     .prediction-label {
@@ -361,7 +367,6 @@ body:not(.form-container){
     }
 }
 
-
 @media(max-width: 1138px) {
     .prediction-result {
         font-size: 16px;
@@ -442,7 +447,7 @@ body:not(.form-container){
     border-radius: 20px;
     cursor: pointer;
     overflow-y: auto;
-    background-color: #ddb892;
+    background-color:  #EADFB4;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.4);
     border-radius: 20px;
     border: 3px outset #e76f51;
@@ -537,24 +542,31 @@ body:not(.form-container){
     padding: 4px 8px;
     box-sizing: border-box;
     border-radius: 20px;
-    height: 28px;
+    height: 35px;
     font-size: 14px;
     border: 2px solid grey; /* Default border color */
 }
 
-input[type="submit"] {
+.form-container input[type="submit"] {
     display: block;
+    font-size: 18px;
+    color: #FFFFFF;
     margin: 20px auto 0;
     padding: 10px 20px;
     background-color: #4CAF50;
-    color: white;
     border: 0.5px solid grey;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.4);
     border-radius: 3px;
     cursor: pointer;
 }
 
-input[type="text"],
-select {
+/* Styles for submit button on hover */
+.form-container input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+input[type="text"], select {
     width: calc(100% - 20px);
     padding: 8px;
     margin: 0px;
@@ -563,7 +575,6 @@ select {
 }
 
 label {
-
     font-weight: bold;
     margin-bottom: 5px;
     cursor: pointer;

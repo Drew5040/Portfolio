@@ -262,7 +262,7 @@
                 <br>
 
                 <!-- Submit Button -->
-                <input id="submitButton" type="submit" value="Submit" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">
+                <input id="submitButton" type="submit" value="Submit">
 
             </form>
             </div>
@@ -274,7 +274,8 @@
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 <!-- Pass 'errors_json' dictionary to script.js -->
-<script type="text/javascript">var errors = JSON.parse('{{ errors_json | safe }}');</script>
+<script
+nonce="{{ csp_nonce }}"  type="text/javascript">var errors = JSON.parse('{{ errors_json | safe }}');</script>
 
 <!-- End: Content-->
 {% endblock %}

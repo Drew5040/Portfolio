@@ -55,6 +55,7 @@ db.sqlite*
 *.tmp
 *~
 
+
 # Csv's
 *.csv
 
@@ -66,3 +67,4 @@ db.sqlite*
 
 # Elastic Beanstalk files
 !.elasticbeanstalk/*
+
