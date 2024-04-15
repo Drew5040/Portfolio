@@ -15,7 +15,7 @@ RUN pip install --upgrade pip
 COPY . .
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements0.txt
 
 # Create directories for server and framework logs
 RUN mkdir -p /app/logs/gunicorn /app/logs/flask

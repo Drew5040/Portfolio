@@ -1,4 +1,6 @@
 
+
+
 // Helper function that checks for strings
 function isAlpha(value) {
     return /^[a-zA-Z]+$/.test(value);

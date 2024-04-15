@@ -1,24 +1,16 @@
 
 
 # Directories
-csv_files/
-tsv_files/
-psv_files/
 data/
 notebook/
-logs/
 __pycache__/
 .venv/
 venv/
 env/
 .env/
 .idea/
-.vscode/
-dist/
-out/
-target/
 .ipynb_checkpoints/
-aws_eb_deploy/
+
 
 # Windows system files
 .DS_Store
@@ -26,9 +18,8 @@ Thumbs.db
 
 # Python-specific files
 *.pyo
-*.pyc
 
-# Virtual environments
+# Virtual environments & environment variables
 *.env
 
 # Logs and databases
@@ -67,5 +58,13 @@ db.sqlite*
 *.psv
 
 # Elastic Beanstalk files
-!.elasticbeanstalk/*
+.elasticbeanstalk/
+.ebextensions
 
+# Ignore version control directories
+.git/
+.gitignore
+
+# Docker files
+nginx/
+Dockerrun.aws.json

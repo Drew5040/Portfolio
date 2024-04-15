@@ -6,18 +6,15 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="Andrew O'Drain's Website">
-    <meta property="og:description" content="Learn more">
-    <meta property="og:image" content="https://andrewodrain.com/static/favicon.png">
-    <meta property="og:url" content="https://andrewodrain.com">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Flask Web Application">
-    <meta property="og:locale" content="en_US">
+
+    {% for meta in metadata %}
+    <meta property="{{ meta.name }}" content="{{ meta.content }}">
+    {% endfor %}
 
     <title>{% block title %} {% endblock %}</title>
 
     <!-- Bootstrap -->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
     {% block links %}
     <!-- main.css import -->
@@ -28,79 +25,79 @@
 
 <!-- Start: Content -->
 
-    <!-- navbar -->
-    <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-        <div class="container-fluid">
+<!-- navbar -->
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+    <div class="container-fluid">
 
-            <!-- favicon.png -->
-            <a class="navbar-brand" href="/">
-                <img src="{{ url_for('static', filename='favicon.png') }}" title="My brand logo: traces out ANWOO" alt="icon" width="30" height="30" class="d-inline-block align-top">
-            </a>
+        <!-- favicon.png -->
+        <a class="navbar-brand" href="/">
+            <img src="{{ url_for('static', filename='favicon.png') }}" title="My brand logo: traces out ANWOO" alt="icon" width="30" height="30" class="d-inline-block align-top">
+        </a>
 
-            <!-- Navbar toggler button -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <!-- Navbar toggler button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <!-- Collapsible content -->
-            <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
 
-                <!-- Dropdown menu and social media links -->
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Navigation
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/">Welcome</a></li>
-                            <li><a class="dropdown-item" href="/about">Project: About</a></li>
-                            <li><a class="dropdown-item" href="/model">Project: ML Web Application</a></li>
-                            <li><a class="dropdown-item" href="/contact">Contact</a></li>
-                        </ul>
-                    </li>
+            <!-- Dropdown menu and social media links -->
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Navigation
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for link in navigation_links %}
+                        <li><a class="dropdown-item" href="{{ link.urls }}" title="{{ link.title }}" target="{{ link.target }}" rel="{{ link.rel }}">{{ link.label }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
 
-                    <!-- GitHub link -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://github.com/Drew5040/Professional.Portfolio" title="Visit my GitHub" target="_blank" rel="nofollow noreferrer">
-                            <img src="{{ url_for('static', filename='git.hub.link.png') }}" alt="GitHub" width="30" height="30" class="d-inline-block align-top">
-                        </a>
-                    </li>
+                <!-- GitHub link -->
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/Drew5040/Professional.Portfolio" title="Visit my GitHub" target="_blank" rel="nofollow noreferrer">
+                        <img src="{{ url_for('static', filename='git.hub.link.png') }}" alt="GitHub" width="30" height="30" class="d-inline-block align-top">
+                    </a>
+                </li>
 
-                    <!-- Linkedin link -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://www.linkedin.com/in/andrewodrain/" title="Visit my LinkedIn" target="_blank" rel="nofollow noreferrer">
-                            <img src="{{ url_for('static', filename='linkedin.link.svg') }}" alt="LinkedIn" width="30" height="30" class="d-inline-block align-top">
-                        </a>
-                    </li>
+                <!-- Linkedin link -->
+                <li class="nav-item">
+                    <a class="nav-link" href="https://www.linkedin.com/in/andrewodrain/" title="Visit my LinkedIn" target="_blank" rel="nofollow noreferrer">
+                        <img src="{{ url_for('static', filename='linkedin.link.svg') }}" alt="LinkedIn" width="30" height="30" class="d-inline-block align-top">
+                    </a>
+                </li>
 
-                     <!-- Medium link -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://medium.com/@Liam42" title="Visit my data science blog" target="_blank" rel="nofollow noreferrer">
-                            <img src="{{ url_for('static', filename='medium.svg') }}" alt="Medium" width="30" height="30" class="d-inline-block align-top">
-                        </a>
-                    </li>
-                </ul>
+                <!-- Medium link -->
+                <li class="nav-item">
+                    <a class="nav-link" href="https://medium.com/@Liam42" title="Visit my data science blog" target="_blank" rel="nofollow noreferrer">
+                        <img src="{{ url_for('static', filename='medium.svg') }}" alt="Medium" width="30" height="30" class="d-inline-block align-top">
+                    </a>
+                </li>
+            </ul>
 
-            </div>
         </div>
-    </nav>
-
-    <!-- Body -->
-    {% block content %}
-
-    {% endblock %}
-
-    <!-- Bootstrap import -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
-    <!-- Footer -->
-    <div class="container-fluid footer">
-    <footer class="footer fixed-bottom">
-        <span class="footer-text">&copy; 2024 Andrew O'Drain. All rights reserved. | <a href="https://www.privacypolicies.com/generic/" rel="noopener noreferrer">Privacy Policy</a></span>
-    </footer>
     </div>
-    </body>
+</nav>
+
+<!-- Body -->
+{% block content %}
+
+{% endblock %}
+
+<!-- Bootstrap import -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<!-- Footer -->
+<div class="container-fluid footer">
+    <footer class="footer fixed-bottom">
+        <span class="footer-text">{{ footer.text_content | safe }} | <a href="{{ footer.privacy_policy_url }}" rel="noopener noreferrer">Privacy Policy</a></span>
+    </footer>
+</div>
+
+</body>
 
 <!-- End: page content -->
 </html>

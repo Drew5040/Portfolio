@@ -1,15 +1,14 @@
-
 <!-- Inherit: 'index.html' -->
-{% extends 'index.html' %}
+{% extends "index.html" %}
 
 <!-- Title of Page -->
 {% block title %}
-Project: About
+{{ about_page_data.page_title }}
 {% endblock %}
 
 {% block links %}
-    {{ super() }}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='about.css') }}">
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='about.css') }}">
 {% endblock %}
 
 <!-- Start: Page Content -->
@@ -20,70 +19,19 @@ Project: About
 
     <!-- Wrapper for Centering-->
     <div class="content-wrapper">
-             <p><b>
-                Hello! In this comprehensive project, I leveraged a multidisciplinary approach, combining the skills of
-                web development, machine learning, and cloud computing to develop a simple yet dynamic web application
-                that predicts income levels based on user-inputted demographic data. The core of the application is built
-                upon a robust machine learning model, specifically a Decision Tree algorithm, trained and tested using a
-                rich dataset of demographics.
-                <br>
-                <br>
-                Development and testing of the machine learning model was conducted in Jupyter Notebook and PyCharm, and the Flask development
-                server facilitated iterative experimentation and visualization, enabling the project's creation. Please keep in mind that
-                the model is currently approximating 83% accuracy. Not much time was spent in the fine-tuning of the model, in favor of
-                dedicating more time to perfect the styling of the web interface. The Python data science libraries utilized in
-                bringing this project to life include Pandas, for the manipulation and cleansing of data; NumPy, for efficient array operations needed
-                for model performance; and Scikit-Learn, for the Decision Tree algorithm itself. Moreover, many packages of Python's standard library
-                were utilized such as Pickle, for the serialization of the model file for model portability; JSON, for data communication between the
-                client side and the server side; and Logging, for the monitoring of the model's and site's performance.
-                <br>
-                <br>
-                The web interface, developed using HTML, CSS, JavaScript, Bootstrap, and Jinja2, offers a colorful user-friendly
-                platform for users to input their personal demographic information, or the demographics of a fictitious person.
-                The backend powered by Python & Flask, seamlessly integrates with the frontend, processing user inputs and interacting with the
-                machine learning model for real-time predictions. JavaScript and Jinja2 templating enriches the frontend with dynamic content generation,
-                enhancing user experience by providing immediate feedback based on the processed data.
-                <br>
-                <br>
-                To ensure the projects maintainability and scalability, I employed the use of Docker for containerization,
-                encapsulating the application and its environment to guarantee consistency across different development and
-                deployment stages. For deployment, the application is hosted on AWS Elastic Beanstalk, a managed service that provides
-                automated scaling and load balancing, ensuring high availability and performance of the site and application. Domain
-                management is handled through AWS's native Route 53 DNS service, establishing a professional web presence with my namesake as the custom domain.
-                <br>
-                <br>
-                To alleviate any potential concerns over privacy while using the application, I have adopted a generic but
-                comprehensive privacy policy, accessible via a link at the bottom of each page. This policy details the types of data collected
-                from users and outlines how this data is—or is not—utilized. I personally guarantee that no demographic
-                data is stored in databases for future use, nor is any data sold. Furthermore, All data that is inputted into the algorithm
-                is erased immediately after the user exits the page, with the exception of certain logging details that consist of matrix data, but lack
-                any identifying information, such as names or ID's. This approach ensures the utmost privacy for users during their interaction with the
-                application. To further enhance data privacy and security, and to bolster user trust, I also secured an SSL certificate via AWS Certificate Manager.
-                This critical step ensures all communication between the user's browser and the server is encrypted via the HTTPS protocol, safeguarding against "Man-In-The-Middle-Attacks"
-                or eavesdropping, and data theft.
-                <br>
-                <br>
-                For efficiency, scalability, and reliability, I opted for a reverse proxy setup with an application server, employing
-                Gunicorn for the WSGI (Web Server Gateway Interface) that directly interacts with the web application's Python code,
-                and the high performance Nginx server which is both client facing and the initial contact for all requests sent to the site.
-                The two servers are wrapped in their own docker containers and networked together to operate as one functional unit.
-                This configuration ensures that the application can efficiently manage traffic, scale as I add more content to the site, and provide reliable access
-                to users, while maintaining a clear separation of concerns between the application processing and request handling.
-                <br>
-                <br>
-                I will soon be adding a contact form and improving the site's aesthetics as soon as the code is ready for deployment. For now, you may
-                follow the links located in the navigation bar to explore more about me, or you can email me directly at <a href="mailto:andrewodrain.com?subject=Feedback&body=Hi%20there,">andrewodrain@outlook.com</a>.
-                I would love to talk more about how my skills and experiences can benefit your organization. Thank you for your time and I hope to hear from you soon!
-            </b></p>
+        <p>
+            {{ about_page_data.project_overview | safe }}
+            {{ about_page_data.additional_info | safe }}
+        </p>
 
-        </div>
     </div>
+</div>
 
 <!-- Link to JavaScript -->
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 <!-- Pass 'errors_json' dictionary to script.js -->
-<script nonce="{{ csp_nonce }}"  type="text/javascript">var errors = JSON.parse('{{ errors_json|safe }}');</script>
+<script type="text/javascript">var errors = JSON.parse('{{ errors_json|safe }}');</script>
 
 <!-- End: Content-->
 {% endblock %}

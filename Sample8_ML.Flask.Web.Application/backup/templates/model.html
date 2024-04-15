@@ -1,4 +1,3 @@
-
 <!-- Inherit: "index.html" -->
 {% extends "index.html" %}
 
@@ -9,8 +8,8 @@
 
 <!-- Links -->
 {% block links %}
-    {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='model.css') }}">
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='model.css') }}">
 {% endblock %}
 
 <!-- Start: page content -->
@@ -22,17 +21,15 @@
 
         <!-- Page Header -->
         <div class="model-page-header">
-            <h1 ><b>Project: Machine Learning Web Application</b></h1>
+            <h1><b>{{ model_page_data.page_header }}</b></h1>
         </div>
 
         <!-- Logos -->
         <div class="col-xs-6">
             <div class="text-center">
-                <img class="logos" src="{{ url_for('static', filename='bootstrap.logo.png') }}" alt="bootstrap.logo">
-                <img class="logos" src="{{ url_for('static', filename='docker.logo.png') }}" alt="docker.logo">
-                <img class="logos" src="{{ url_for('static', filename='flask.logo.png') }}" alt="flask.logo">
-                <img class="logos" src="{{ url_for('static', filename='trinity.html.js.css.png') }}" alt="trinity.logo">
-                <img class="logos" src="{{ url_for('static', filename='python.logo.png') }}" alt="python.logo">
+                {% for logo in model_page_data.logos_urls %}
+                <img class="logos" src="{{ url_for('static', filename=logo) }}" alt=logo>
+                {% endfor %}
             </div>
         </div>
 
@@ -274,8 +271,7 @@
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 <!-- Pass 'errors_json' dictionary to script.js -->
-<script
-nonce="{{ csp_nonce }}"  type="text/javascript">var errors = JSON.parse('{{ errors_json | safe }}');</script>
+<script type="text/javascript">var errors = JSON.parse('{{ errors_json | safe }}');</script>
 
 <!-- End: Content-->
 {% endblock %}

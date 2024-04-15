@@ -3,12 +3,13 @@ Gunicorn configuration file for setting various options for the server.
 """
 
 from os import getenv
+from app import logger
 
 # Number of worker processes
-WORKERS = 4
+WORKERS = 10
 
 # Host and port to bind to
-PORT = getenv('PORT', '5000')  # Ensure default is string to match getenv expected return type
+PORT = getenv('PORT', '5000')
 BIND = f'0.0.0.0:{PORT}'
 
 # Worker timeout
@@ -27,19 +28,16 @@ CHDIR = '/app'
 CAPTURE_OUTPUT = True
 
 # Access log path in container
-ACCESSLOG = "/app/logs/gunicorn/access.log"
+ACCESSLOG = "/app/gunicorn/logs/access.log"
 
 # Error log path in container
-ERRORLOG = "/app/logs/gunicorn/error.log"
+ERRORLOG = "/app/gunicorn/logs/error.log"
 
 # Set log format
 ACCESS_LOG_FORMAT = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 
-# Set environment variables
-RAW_ENV = [
-    'FLASK_APP=app.py',
-    'FLASK_ENV=production',
-]
-
 # Specify the Flask application to be run by Gunicorn
 DEFAULT_PROC_NAME = 'app:FlaskApplication'
+
+# Log that gunicorn configs have been accessed
+logger.info('Gunicorn config has been accessed ...')

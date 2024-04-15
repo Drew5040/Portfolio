@@ -1,4 +1,4 @@
-from logging import error, info
+from aws_eb_deploy.log_config import error, info
 from numpy import array
 from pickle import load
 

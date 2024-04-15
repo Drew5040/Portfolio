@@ -1,8 +1,5 @@
 
 # Directories
-csv_files/
-tsv_files/
-psv_files/
 data/
 notebook/
 logs/
@@ -18,13 +15,14 @@ out/
 target/
 .ipynb_checkpoints/
 
+
 # Windows system files
 .DS_Store
 Thumbs.db
 
 # Python-specific files
 *.pyo
-*.pyc
+
 
 # Virtual environments
 *.env
@@ -65,10 +63,12 @@ db.sqlite*
 *.psv
 
 # Elastic Beanstalk files
-!.elasticbeanstalk/*
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
-config.py
+.elasticbeanstalk/
 .ebextensions
+
+# Ignore version control directories
+.git/
+.gitignore
+
+# Sensitive files
+env-vars.conf

@@ -1,9 +1,6 @@
 
 
 # Directories
-csv_files/
-tsv_files/
-psv_files/
 data/
 notebook/
 logs/
@@ -18,7 +15,7 @@ dist/
 out/
 target/
 .ipynb_checkpoints/
-aws_eb_deploy/
+
 
 # Windows system files
 .DS_Store
@@ -26,7 +23,7 @@ Thumbs.db
 
 # Python-specific files
 *.pyo
-*.pyc
+
 
 # Virtual environments
 *.env
@@ -67,5 +64,15 @@ db.sqlite*
 *.psv
 
 # Elastic Beanstalk files
-!.elasticbeanstalk/*
+.elasticbeanstalk/
+.ebextensions
+
+# Ignore version control directories
+.git/
+.gitignore
+
+# Ignore Docker-related files
+Dockerfile
+Dockerrun.aws.json
+docker-compose.yml
 

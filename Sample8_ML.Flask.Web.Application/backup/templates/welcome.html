@@ -1,16 +1,16 @@
-
 <!-- Inherit "index.html" -->
 {% extends "index.html" %}
 
 <!-- Tab title -->
 {% block title %}
-    Creator: Andrew O'Drain
+Creator: Andrew O'Drain
 {% endblock %}
 
 <!-- Links -->
 {% block links %}
-	{{ super() }}
-	<link rel="stylesheet" href="{{ url_for('static', filename='welcome.css') }}">
+{{ super() }}
+<!--suppress ALL -->
+<link rel="stylesheet" href="{{ url_for('static', filename='welcome.css') }}">
 {% endblock %}
 
 <!-- Start of page content -->
@@ -21,80 +21,74 @@
 		<!-- Profile picture -->
 		<div class="col-xs-12">
 			<div class="text-center" style="margin-top: 5vh">
-				<img src="{{ url_for('static', filename='git.hub.headshot.400.400.jpg') }}" alt="Photo" class="img-fluid rounded-circle mx-auto d-block profile-pic">
+				<img src="{{ url_for('static', filename=welcome_page_data.profile_image_url) }}" alt="Photo"
+					 class="img-fluid rounded-circle mx-auto d-block profile-pic">
 			</div>
 
-		<!-- Sub-profile text -->
-		<h1 class="text-center mt-2" style="color: #FFFFFF; text-shadow: 2px 2px 5px rgb(0.0, 0.0, 0.5); margin-top: 2vh"><b>Andrew O'Drain</b></h1>
-		<h2 class="text-center mt-2" style="color: #FFFFFF; text-shadow: 2px 2px 5px rgb(0.0, 0.0, 0.5); margin-top: 2vh"><b>B.Sc. Statistical Science & Data Analytics</b></h2>
+			<!-- Sub-profile text -->
+			<h1 class="text-center mt-2"
+				style="color: #FFFFFF; text-shadow: 2px 2px 5px rgb(0.0, 0.0, 0.5); margin-top: 2vh"><b>{{
+				welcome_page_data.name }}</b></h1>
+			<h2 class="text-center mt-2"
+				style="color: #FFFFFF; text-shadow: 2px 2px 5px rgb(0.0, 0.0, 0.5); margin-top: 2vh"><b>{{
+				welcome_page_data.qualification }}</b></h2>
 		</div>
 
 		<!-- Temple logo -->
 		<div class="col-xs-12">
 			<div class="text-center" style="margin-top: 2vh; margin-bottom: 2vh;">
-				<img src="{{ url_for('static', filename='temple.logo.png') }}" alt="Photo" class="img-fluid mx-auto d-block logo">
+				<img src="{{ url_for('static', filename=welcome_page_data.institution_logo_url) }}" alt="Photo"
+					 class="img-fluid mx-auto d-block logo">
 			</div>
-				<h2 class="text-center mt-2 business-school" style="color: #FFFFFF; text-shadow: 2px 2px 5px rgb(0.0, 0.0, 0.5); margin-bottom: 5vh;"><b>Fox School of Business</b></h2>
+			<h2 class="text-center mt-2 business-school"
+				style="color: #FFFFFF; text-shadow: 2px 2px 5px rgb(0.0, 0.0, 0.5); margin-bottom: 5vh;"><b>{{
+				welcome_page_data.institution_name }}</b></h2>
 
 		</div>
 	</div>
 
-<!-- Text section part 1 -->
+	<!-- Text section part 1 -->
 	<div class="col-xs-12" style="color: #FFFFFF; text-shadow: 1px 1px 2px rgb(0.0, 0.0, 0.2);">
 		<div class="text-center">
-			<h2>Are you looking for a determined and analytically-minded professional to join your data science team?</h2>
+			<h2>{{ welcome_page_data.intro_header }}</h2>
 			<br>
 
-		<!-- Diamonds -->
-		<div class="container">
-			<div class="diamond-bullets">
-				<span>&#10070;</span>
-				<span>&#x2756;</span>
-				<span>&#x2756;</span>
+			<!-- Diamonds -->
+			<div class="container">
+				<div class="diamond-bullets">
+					<span>&#10070;</span>
+					<span>&#x2756;</span>
+					<span>&#x2756;</span>
+				</div>
 			</div>
-		</div>
-		<br>
+			<br>
 
-		<!-- Text section part 2 -->
-		<h4>With a solid background as an EMT and a degree in Statistical Science & Data Analytics from Temple University,<br>I bring a unique perspective to the world of data-driven decision-making!</h4>
+			<!-- Text section part 2 -->
+			<h4>{{ welcome_page_data.intro_text | safe }}</h4>
 
-	</div>
-</div>
-
-<!-- Start: reason-box container -->
-<div class="container">
-	<div class="row">
-
-		<!-- Box 1 -->
-		<div class="col-md-4">
-			<div class="reason-box1">
-				<h5><b>Analytical Mindset</b></h5>
-				<p><b><i>-As an EMT, I have honed my ability to think critically and make quick decisions under pressure, skills that I am eager to translate into strategic problem-solving!</i></b></p>
-			</div>
-		</div>
-
-		<!-- Box 2 -->
-		<div class="col-md-4">
-			<div class="reason-box2">
-				<h5><b>Collaborative Mindset</b></h5>
-				<p><b><i>-Throughout my career as an EMT, teamwork has been at the core of my success. I thrive in collaborative environments and working with diverse teams to solve complex problems!</i></b></p>
-			</div>
-		</div>
-
-		<!-- Box 3 -->
-		<div class="col-md-4">
-			<div class="reason-box3">
-				<h5><b>Strong Foundation</b></h5>
-				<p><b><i>-My degree in data analytics has equipped me with a solid understanding of statistical models, data visualization techniques, and machine learning algorithms!</i></b></p>
-			</div>
 		</div>
 	</div>
-</div>
+
+	<!-- Start: reason-box container -->
+	<div class="container">
+		<div class="row">
+
+			<!-- Loop: populate data for reason boxes -->
+			{% for usp_item in welcome_page_data.usp_data %}
+			<div class="col-md-4">
+				<div class="reason-box{{ loop.index }}">
+					<h5><b>{{ usp_item.title }}</b></h5>
+					<p><b><i>{{ usp_item.description }}</i></b></p>
+				</div>
+			</div>
+			{% endfor %}
+
+		</div>
+	</div>
 </div>
 
 <!-- End: page content -->
 {% endblock %}
-
 
 
 

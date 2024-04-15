@@ -1,13 +1,19 @@
 {
-  "AWSEBDockerrunVersion": "1",
+  "AWSEBDockerrunVersion": "2",
   "containerDefinitions": [
     {
-      "name": "app",
+      "name": "app_container",
       "image": "andrewodrain/web-applications:app-v0.0.2",
-      "essential": true
+      "essential": true,
+      "environment": [
+        {
+          "name": "SQLALCHEMY_DATABASE_URI",
+          "value": "postgresql://andrew:ZiggyMoose1021%40@psql_container:5432/web_project"
+        }
+      ],
     },
     {
-      "name": "nginx",
+      "name": "nginx_container",
       "image": "andrewodrain/web-applications:nginx-v0.2",
       "essential": true,
       "portMappings": [
@@ -18,6 +24,52 @@
       ],
       "links": [
         "app"
+      ]
+    },
+    {
+      "name": "psql_container",
+      "image": "andrewodrain/web-applications:psql-v0.0.2",
+      "essential": true
+    }
+  ]
+}
+
+{
+  "AWSEBDockerrunVersion": "2",
+  "containerDefinitions": [
+    {
+      "name": "psql_container",
+      "image": "andrewodrain/web-applications:psql-v0.0.2",
+      "essential": true,
+      "memory": 512,
+      "environment": [
+        {
+          "name": "POSTGRES_DB",
+          "value": "yourdbname"
+        },
+        {
+          "name": "POSTGRES_USER",
+          "value": "yourdbuser"
+        },
+        {
+          "name": "POSTGRES_PASSWORD",
+          "value": "yourdbpassword"
+        }
+      ]
+    },
+    {
+      "name": "app_container",
+      "image": "andrewodrain/web-applications:app-v0.0.2",
+      "essential": true,
+      "memory": 512,
+      "links": [
+        "psql_container"
+      ],
+      "environment": [
+        {
+          "name": "SQLALCHEMY_DATABASE_URI",
+          "value": "postgresql://yourdbuser:yourdbpassword@psql_container:5432/yourdbname"
+        }
       ]
     }
   ]
