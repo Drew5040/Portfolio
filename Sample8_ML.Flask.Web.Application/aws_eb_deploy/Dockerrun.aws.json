@@ -2,75 +2,107 @@
   "AWSEBDockerrunVersion": "2",
   "containerDefinitions": [
     {
-      "name": "app_container",
-      "image": "andrewodrain/web-applications:app-v0.0.2",
+      "name": "psql_containerd",
+      "image": "andrewodrain/web-applications:psqld-v0.0.2",
       "essential": true,
-      "environment": [
-        {
-          "name": "SQLALCHEMY_DATABASE_URI",
-          "value": "postgresql://andrew:ZiggyMoose1021%40@psql_container:5432/web_project"
+      "memory": 512,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "portfolio-app-logs",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "psql"
         }
-      ],
-    },
-    {
-      "name": "nginx_container",
-      "image": "andrewodrain/web-applications:nginx-v0.2",
-      "essential": true,
-      "portMappings": [
+      },
+      "mountPoints": [
         {
-          "containerPort": 80,
-          "hostPort": 80
+          "sourceVolume": "psql-data",
+          "containerPath": "/var/lib/postgresql/data",
+          "readOnly": false
         }
-      ],
-      "links": [
-        "app"
       ]
     },
     {
-      "name": "psql_container",
-      "image": "andrewodrain/web-applications:psql-v0.0.2",
-      "essential": true
+      "name": "app_containerd",
+      "image": "andrewodrain/web-applications:appd-v0.0.2",
+      "essential": true,
+      "memory": 512,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "portfolio-app-logs",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "app"
+        }
+      }
+    },
+    {
+      "name": "redis_containerd",
+      "image": "andrewodrain/web-applications:redisd-v0.0.2",
+      "essential": true,
+      "memory": 256,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "portfolio-app-logs",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "redis"
+        }
+      },
+      "mountPoints": [
+        {
+          "sourceVolume": "redis-data",
+          "containerPath": "/var/lib/redis",
+          "readOnly": false
+        },
+        {
+          "sourceVolume": "redis-config",
+          "containerPath": "/usr/local/etc/redis",
+          "readOnly": false
+        }
+      ]
+    },
+    {
+      "name": "nginx_containerd",
+      "image": "andrewodrain/web-applications:nginxd-v0.0.2",
+      "essential": true,
+      "memory": 512,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "portfolio-app-logs",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "nginx"
+        }
+      },
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ]
+    }
+  ],
+  "volumes": [
+    {
+      "name": "psql-data",
+      "host": {
+        "sourcePath": "/var/lib/postgresql/data"
+      }
+    },
+    {
+      "name": "redis-data",
+      "host": {
+        "sourcePath": "/var/app/redis-data"
+      }
+    },
+    {
+      "name": "redis-config",
+      "host": {
+        "sourcePath": "/var/app/redis-config"
+      }
     }
   ]
 }
 
-{
-  "AWSEBDockerrunVersion": "2",
-  "containerDefinitions": [
-    {
-      "name": "psql_container",
-      "image": "andrewodrain/web-applications:psql-v0.0.2",
-      "essential": true,
-      "memory": 512,
-      "environment": [
-        {
-          "name": "POSTGRES_DB",
-          "value": "yourdbname"
-        },
-        {
-          "name": "POSTGRES_USER",
-          "value": "yourdbuser"
-        },
-        {
-          "name": "POSTGRES_PASSWORD",
-          "value": "yourdbpassword"
-        }
-      ]
-    },
-    {
-      "name": "app_container",
-      "image": "andrewodrain/web-applications:app-v0.0.2",
-      "essential": true,
-      "memory": 512,
-      "links": [
-        "psql_container"
-      ],
-      "environment": [
-        {
-          "name": "SQLALCHEMY_DATABASE_URI",
-          "value": "postgresql://yourdbuser:yourdbpassword@psql_container:5432/yourdbname"
-        }
-      ]
-    }
-  ]
-}
+

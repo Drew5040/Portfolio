@@ -12,6 +12,8 @@ ENV MODSEC_DATA_DIR=/var/modsecurity/data
 RUN apt-get update && \
     apt-get install -y \
     nginx \
+    curl \
+    iputils-ping \
     make \
     automake \
     build-essential \
@@ -66,10 +68,13 @@ RUN mkdir -p $MODSEC_TMP_DIR $MODSEC_DATA_DIR && \
     chmod -R 700 $MODSEC_TMP_DIR $MODSEC_DATA_DIR
 
 # Create debugging logs
-RUN mkdir -p /opt/modsecurity/var/log/ && \
-    mkdir -p /var/log/modsec_audit.log && \
-    mkdir -p /var/modsecurity/tmp/ && \
-    mkdir -p /var/modsecurity/data/
+RUN mkdir -p /opt/modsecurity/var/log/ \
+             /var/modsecurity/tmp/ \
+             /var/modsecurity/data/
+
+# Create log files
+RUN touch /opt/modsecurity/var/log/debug.log \
+          /var/log/modsec_audit.log
 
 # Log directory and file for ElasticBeanstalk health monitoring
 RUN mkdir -p /var/log/nginx/healthd/ && \

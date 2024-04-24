@@ -1,19 +1,14 @@
 
 
 # Directories
-data/
+
 notebook/
-logs/
 __pycache__/
 .venv/
 venv/
 env/
 .env/
 .idea/
-.vscode/
-dist/
-out/
-target/
 .ipynb_checkpoints/
 
 
@@ -23,15 +18,6 @@ Thumbs.db
 
 # Python-specific files
 *.pyo
-
-
-# Virtual environments
-*.env
-
-# Logs and databases
-*.sql
-*.sqlite
-db.sqlite*
 
 # Compiled files
 *.class
@@ -71,8 +57,17 @@ db.sqlite*
 .git/
 .gitignore
 
-# Ignore Docker-related files
-Dockerfile
-../Dockerrun.aws.json
-../aws_eb_deploy/docker-compose.yml
+# Docker files
+Dockerrun.aws.json
 
+# Nginx
+nginx/
+
+# Internal logs
+logs/
+
+# Environment Variables
+*container.env
+
+# Markdown
+*.md

@@ -68,6 +68,6 @@ db.sqlite*
 
 # Ignore Docker-related files
 Dockerfile
-Dockerrun.aws.json
-docker-compose.yml
+../Dockerrun.aws.json
+../aws_eb_deploy/docker-compose.yml
 

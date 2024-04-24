@@ -6,14 +6,14 @@ from os import getenv
 from app import logger
 
 # Number of worker processes
-WORKERS = 10
+WORKERS = 4
 
 # Host and port to bind to
 PORT = getenv('PORT', '5000')
 BIND = f'0.0.0.0:{PORT}'
 
 # Worker timeout
-TIMEOUT = 30
+TIMEOUT = 120
 
 # Load application code before forking worker processes
 PRELOAD = True

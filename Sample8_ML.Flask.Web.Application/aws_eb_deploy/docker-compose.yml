@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
 
   psql:
@@ -8,36 +6,23 @@ services:
     container_name: psql_container
     env_file:
       - ./database/psql_container.env
-    ports:
-      - "5432:5432"
-    volumes:
-      - db-data:/var/lib/postgresql/data
-      - ./database/postgresql.conf:/etc/postgresql/16/main/postgresql.conf:ro
-      - ./database/logs:/var/log/postgresql
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "3"
 
   app:
     build: ./
     image: andrewodrain/web-applications:app-v0.0.2
     container_name: app_container
     env_file:
-      - app_container.env
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./logs/flask:/app/logs/flask
-      - ./logs/gunicorn:/app/logs/gunicorn
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "3"
+      - ./app_container.env
     depends_on:
       - psql
+      - redis
+
+  redis:
+    build: ./redis
+    image: andrewodrain/web-applications:redis-v0.0.2
+    container_name: redis_container
+    env_file:
+      - ./redis/redis_container.env
 
   nginx:
     build: ./nginx
@@ -47,22 +32,6 @@ services:
       - ./nginx/nginx_container.env
     ports:
       - "80:80"
-    volumes:
-      - ./nginx/conf:/etc/nginx:ro
-      - ./nginx/nginx_logs:/var/log/nginx
-      - ./nginx/modsecurity/conf:/etc/modsecurity:ro
-      - ./nginx/modsecurity/logs:/var/log/modsecurity
-      - ./nginx/modsecurity/data:/var/modsecurity/data
-      - ./nginx/modsecurity/tmp:/var/modsecurity/tmp
-      - ./nginx/modsecurity/debug_logs:/opt/modsecurity/var/log
-      - ./nginx/healthd_logs:/var/log/nginx/healthd
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "3"
     depends_on:
       - app
 
-volumes:
-  db-data: { }

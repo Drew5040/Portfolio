@@ -1,7 +1,7 @@
 
 
 # Directories
-data/
+
 notebook/
 __pycache__/
 .venv/
@@ -19,11 +19,9 @@ Thumbs.db
 # Python-specific files
 *.pyo
 
-# Virtual environments & environment variables
-*.env
 
-# Logs and databases
-*.sql
+
+# Databases
 *.sqlite
 db.sqlite*
 
@@ -66,5 +64,20 @@ db.sqlite*
 .gitignore
 
 # Docker files
-nginx/
 Dockerrun.aws.json
+
+
+# Nginx
+nginx/
+
+# Psql files
+database/
+
+# Internal logs
+logs/
+
+# Environment Variables
+*container.env
+
+# Markdown
+*.md

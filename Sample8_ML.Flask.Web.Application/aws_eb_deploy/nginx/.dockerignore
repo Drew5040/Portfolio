@@ -1,18 +1,14 @@
 
+
 # Directories
-data/
+
 notebook/
-logs/
 __pycache__/
 .venv/
 venv/
 env/
 .env/
 .idea/
-.vscode/
-dist/
-out/
-target/
 .ipynb_checkpoints/
 
 
@@ -23,12 +19,7 @@ Thumbs.db
 # Python-specific files
 *.pyo
 
-
-# Virtual environments
-*.env
-
-# Logs and databases
-*.sql
+# Databases
 *.sqlite
 db.sqlite*
 
@@ -70,5 +61,24 @@ db.sqlite*
 .git/
 .gitignore
 
-# Sensitive files
-env-vars.conf
+# Docker files
+Dockerrun.aws.json
+
+
+# Psql files
+database/
+
+# Internal logs
+logs/
+
+# Environment Variables
+*container.env
+
+# Markdown
+*.md
+
+# Health Logs
+healthd_logs/
+nginx_logs/
+modsecurity/data
+modsecurity/tmp

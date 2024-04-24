@@ -1,8 +1,6 @@
 
 # Directories
-data/
 notebook/
-logs/
 __pycache__/
 .venv/
 venv/
@@ -10,9 +8,6 @@ env/
 .env/
 .idea/
 .vscode/
-dist/
-out/
-target/
 .ipynb_checkpoints/
 
 
@@ -27,7 +22,6 @@ Thumbs.db
 *.env
 
 # Logs and databases
-*.sql
 *.sqlite
 db.sqlite*
 
@@ -65,14 +59,27 @@ db.sqlite*
 .git/
 .gitignore
 
-# Ignore certain Docker-related files
+# Ignore Docker-related files
 docker-compose.yml
-nginx/Dockerfile
+Dockerfile
+.dockerignore
+
+# Python project files
+*.py
 
 # Requirements
 requirements.txt
 
 # Pickle files
 model.pkl
+
+# Project directories
+database/
+logs/
+nginx/
+static/
+templates/
+
+
 
 

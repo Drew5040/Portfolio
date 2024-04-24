@@ -3,9 +3,9 @@ This module contains helper functions for model prediction and form validation
 in a sample machine learning Flask web application.
 """
 
+from log_config import logger
 from pickle import load
 from numpy import array
-from log_config import logger
 
 
 # Model Prediction

@@ -1,9 +1,13 @@
 """
-Module docstring: This module configures and initializes the Flask application and its components.
+app.py
+
+This module configures and initializes the Flask application and its components.
 """
 
 import sys
 from os import getenv, environ
+from logging import DEBUG, StreamHandler, getLevelName
+from pythonjsonlogger import jsonlogger
 from json import dumps
 from email.message import EmailMessage
 from smtplib import SMTPAuthenticationError, SMTP
@@ -12,7 +16,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from gunicorn.app.base import Application
-from redis import Redis
+from redis import Redis, RedisError
 from config import Config
 from helper import value_predictor, validate_form_entries
 from log_config import logger
@@ -26,36 +30,51 @@ from content import (
 
 )
 
+
 # Set app instance
 app = Flask(__name__)
-logger.info("FLASK APP configured")
+
+# Log that app is instantiated
+logger.info("FLASK APP & Logs configured")
 
 # Register error handlers
 register_error_handlers(app)
 
 # Set session variables
-app.config.from_object('config.Config')
+app.config.from_object(Config)
 
 # Create & connect PostgreSQL database instance
 db = SQLAlchemy(app)
+
+# Log sqlalchemy configured
 logger.info("SqlAlchemy configured...")
 
-# Initialize the Limiter with explicit parameters from the app config
-limiter = Limiter(
-    key_func=get_remote_address,
-    app=app,
-    storage_uri="redis://localhost:6379",
-    default_limits=[getenv('RATELIMIT_DEFAULT')]
-)
+try:
+    # Initialize Redis connection once
+    redis = Redis(
+        host=app.config['REDIS_HOST'],
+        port=app.config['REDIS_PORT'],
+        db=app.config['REDIS_DB'],
+        password=app.config['SUPER_SECRET_PASSWORD']
+    )
 
-# Log the rate limiter object is instantiated
-logger.info("Limiter configured")
+    # Check if Redis server is reachable
+    redis.ping()
+    logger.info("Redis connection established ...")
 
-# Set up Redis connection
-redis = Redis(host='localhost', port=6379, db=0)
+    # Initialize the Limiter with explicit parameters from the app config
+    limiter = Limiter(
+        key_func=get_remote_address,
+        app=app,
+        storage_uri=f"redis://:{app.config['SUPER_SECRET_PASSWORD']}@{app.config['REDIS_HOST']}:{app.config['REDIS_PORT']}",
+        default_limits=[app.config['RATELIMIT_DEFAULT']]
+    )
+    logger.info("Limiter() configured ...")
 
-# Log that Redis is configured
-logger.info("Redis configured")
+except RedisError as e:
+    logger.error(f'Failed to connect to Redis or configure Limiter: {e}')
+
+
 
 # Set Context Processor
 @app.context_processor
@@ -228,9 +247,9 @@ def contact_page():
 
             # Create EmailMessage object
             msg = EmailMessage()
-            msg['From'] = getenv("EMAIL_USERNAME")
+            msg['From'] = app.config["EMAIL_USERNAME"]
             msg['Reply-To'] = sender
-            msg['To'] = getenv("EMAIL_USERNAME")
+            msg['To'] = app.config['EMAIL_USERNAME']
             msg['Subject'] = subject
 
             # Log the msg object was created
@@ -243,9 +262,9 @@ def contact_page():
             with SMTP("smtp.office365.com", 587) as server:
                 server.starttls()
                 logger.debug('TLS initiated...')
-                server.login(getenv("EMAIL_USERNAME"), getenv('WEB_APP_SECRET'))
+                server.login(app.config["EMAIL_USERNAME"], app.config['WEB_APP_SECRET'])
                 logger.debug('Server login successful...')
-                server.sendmail(getenv("EMAIL_USERNAME"), getenv("EMAIL_USERNAME"), msg.as_string())
+                server.sendmail(app.config["EMAIL_USERNAME"], app.config["EMAIL_USERNAME"], msg.as_string())
                 logger.debug("email was sent ...")
                 server.quit()
 
@@ -272,7 +291,7 @@ def contact_page():
 def health():
     """Health view that lets AWS know the application's status"""
     logger.info('Health ok...')
-    return 200, 'OK'
+    return 'OK', 200
 
 
 class FlaskApplication(Application):
