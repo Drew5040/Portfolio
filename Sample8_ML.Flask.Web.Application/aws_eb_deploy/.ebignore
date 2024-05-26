@@ -1,71 +1,20 @@
 
-# Directories
-notebook/
+# Ignore Python directories
 __pycache__/
-.venv/
-venv/
-env/
-.env/
-.idea/
-.vscode/
-.ipynb_checkpoints/
-
-
-# Windows system files
-.DS_Store
-Thumbs.db
-
-# Python-specific files
 *.pyo
-
-# Virtual environments
-*.env
-
-# Logs and databases
-*.sqlite
-db.sqlite*
-
-# Compiled files
-*.class
-*.jar
-*.war
-*.ear
-*.hprof
-*.min.js
-*.min.css
-
-# LaTeX files
-*.aux
-*.bbl
-*.blg
-*.out
-
-# Backup & temp files
-*.bak
-*.swp
-*.tmp
-*~
-
-# Csv's
-*.csv
-
-# Tsv's
-*.tsv
-
-# Psv's
-*.psv
 
 # Ignore version control directories
 .git/
 .gitignore
 
-# Ignore Docker-related files
+# Ignore local development related files
 docker-compose.yml
+Dockerfile.*
 Dockerfile
 .dockerignore
 
-# Python project files
-*.py
+# Ignore environment variables
+*.env
 
 # Requirements
 requirements.txt
@@ -73,12 +22,13 @@ requirements.txt
 # Pickle files
 model.pkl
 
-# Project directories
+# Ignore project specific directories & files
 database/
-logs/
 nginx/
-static/
-templates/
+app/static/
+app/templates/
+redis/
+load_testing/
 
 
 

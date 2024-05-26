@@ -1,0 +1,6 @@
+Container ID    Name                 Max CPU %  Min CPU %  Max MEM (MiB)   Min MEM (MiB)
+4a53c962ad7c    nginx_container      1.25       0.00       31.40           30.93
+8c9392b998af    celery_container     3.38       0.00       1.37            1.36
+fedba8e79bc6    psql_container       0.79       0.00       41.17           40.79
+d6a8fb508df1    redis_container      1.02       0.13       9.68            9.28
+5413a0ba5ac8    app_container        5.34       0.01       327.10          326.50

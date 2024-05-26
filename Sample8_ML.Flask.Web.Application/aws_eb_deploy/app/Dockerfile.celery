@@ -1,0 +1,21 @@
+# Use an official Python runtime as a parent image
+FROM python:3.10-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the entire local application directory
+COPY . /app
+
+# Update OS and clean up
+RUN apt-get update && \
+    apt-get install -y gcc python3-dev pkg-config libcairo2-dev supervisor && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Start Celery worker
+CMD ["celery", "-A", "app.celery", "worker", "--loglevel=info"]
+

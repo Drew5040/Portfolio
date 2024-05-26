@@ -2,14 +2,14 @@
   "AWSEBDockerrunVersion": "2",
   "containerDefinitions": [
     {
-      "name": "psql_containerd",
-      "image": "andrewodrain/web-applications:psqld-v0.0.2",
+      "name": "psql_container",
+      "image": "andrewodrain/web-applications:psql-v0.0.2",
       "essential": true,
-      "memory": 512,
+      "memory": 100,
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "portfolio-app-logs",
+          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/var/log/containers/psql",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "psql"
         }
@@ -17,34 +17,39 @@
       "mountPoints": [
         {
           "sourceVolume": "psql-data",
-          "containerPath": "/var/lib/postgresql/data",
+          "containerPath": "/app/postgresql/psql-data",
           "readOnly": false
         }
       ]
     },
     {
-      "name": "app_containerd",
-      "image": "andrewodrain/web-applications:appd-v0.0.2",
+      "name": "app_container",
+      "image": "andrewodrain/web-applications:app-v0.0.2",
       "essential": true,
-      "memory": 512,
+      "memory": 500,
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "portfolio-app-logs",
+          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/var/log/containers/app",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "app"
         }
-      }
+      },
+      "links": [
+        "psql_container",
+        "redis_container",
+        "celery_container"
+      ]
     },
     {
-      "name": "redis_containerd",
-      "image": "andrewodrain/web-applications:redisd-v0.0.2",
+      "name": "redis_container",
+      "image": "andrewodrain/web-applications:redis-v0.0.2",
       "essential": true,
-      "memory": 256,
+      "memory": 20,
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "portfolio-app-logs",
+          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/var/log/containers/redis",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "redis"
         }
@@ -52,29 +57,73 @@
       "mountPoints": [
         {
           "sourceVolume": "redis-data",
-          "containerPath": "/var/lib/redis",
+          "containerPath": "/app/redis/redis-data",
           "readOnly": false
         },
         {
           "sourceVolume": "redis-config",
-          "containerPath": "/usr/local/etc/redis",
+          "containerPath": "/app/redis/redis-config",
           "readOnly": false
         }
       ]
     },
     {
-      "name": "nginx_containerd",
-      "image": "andrewodrain/web-applications:nginxd-v0.0.2",
+      "name": "celery_container",
+      "image": "andrewodrain/web-applications:celery-v0.0.2",
       "essential": true,
-      "memory": 512,
+      "memory": 10,
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "portfolio-app-logs",
+          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/var/log/containers/celery",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "celery"
+        }
+      },
+      "links": [
+        "redis_container"
+      ]
+    },
+    {
+      "name": "nginx_container",
+      "image": "andrewodrain/web-applications:nginx-v0.0.2",
+      "essential": true,
+      "memory": 50,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/var/log/containers/nginx",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "nginx"
         }
       },
+      "mountPoints": [
+        {
+          "sourceVolume": "modsecurity-logs",
+          "containerPath": "/var/log/modsecurity",
+          "readOnly": false
+        },
+        {
+          "sourceVolume": "nginx-healthd-logs",
+          "containerPath": "/var/log/nginx/healthd",
+          "readOnly": false
+        },
+        {
+          "sourceVolume": "modsecurity-config",
+          "containerPath": "/etc/modsecurity",
+          "readOnly": false
+        },
+        {
+          "sourceVolume": "modsecurity-tmp",
+          "containerPath": "/var/modsecurity/tmp",
+          "readOnly": false
+        },
+        {
+          "sourceVolume": "modsecurity-data",
+          "containerPath": "/var/modsecurity/data",
+          "readOnly": false
+        }
+      ],
       "portMappings": [
         {
           "hostPort": 80,
@@ -87,22 +136,53 @@
     {
       "name": "psql-data",
       "host": {
-        "sourcePath": "/var/lib/postgresql/data"
+        "sourcePath": "/app/postgresql/psql-data"
       }
     },
     {
       "name": "redis-data",
       "host": {
-        "sourcePath": "/var/app/redis-data"
+        "sourcePath": "/app/redis/redis-data"
       }
     },
     {
       "name": "redis-config",
       "host": {
-        "sourcePath": "/var/app/redis-config"
+        "sourcePath": "/app/redis/redis-config"
+      }
+    },
+    {
+      "name": "modsecurity-logs",
+      "host": {
+        "sourcePath": "/var/app/modsecurity/logs"
+      }
+    },
+    {
+      "name": "nginx-healthd-logs",
+      "host": {
+        "sourcePath": "/var/app/nginx/healthd/logs"
+      }
+    },
+    {
+      "name": "modsecurity-config",
+      "host": {
+        "sourcePath": "/var/app/modsecurity/config"
+      }
+    },
+    {
+      "name": "modsecurity-tmp",
+      "host": {
+        "sourcePath": "/var/app/modsecurity/tmp"
+      }
+    },
+    {
+      "name": "modsecurity-data",
+      "host": {
+        "sourcePath": "/var/app/modsecurity/data"
       }
     }
   ]
 }
+
 
 

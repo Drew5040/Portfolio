@@ -1,37 +1,69 @@
 services:
-
-  psql:
-    build: ./database
-    image: andrewodrain/web-applications:psql-v0.0.2
-    container_name: psql_container
-    env_file:
-      - ./database/psql_container.env
-
   app:
-    build: ./
+    build:
+      context: ./app
+      dockerfile: Dockerfile.app
     image: andrewodrain/web-applications:app-v0.0.2
     container_name: app_container
+    volumes:
+      - app-volume:/app
+      - static-volume:/app/static
     env_file:
-      - ./app_container.env
+      - ./app/app_container.env
     depends_on:
       - psql
       - redis
+      - celery
+
+  celery:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.celery
+    image: andrewodrain/web-applications:celery-v0.0.2
+    container_name: celery_container
+    volumes:
+      - app-volume:/app
+    env_file:
+      - ./app/celery_container.env
+    depends_on:
+      - redis
 
   redis:
-    build: ./redis
+    build:
+      context: ./redis_database
     image: andrewodrain/web-applications:redis-v0.0.2
     container_name: redis_container
     env_file:
-      - ./redis/redis_container.env
+      - ./redis_database/redis_container.env
 
   nginx:
-    build: ./nginx
-    image: andrewodrain/web-applications:nginx-v0.0.2
+    build:
+      context: ./nginx
     container_name: nginx_container
-    env_file:
+    image: andrewodrain/web-applications:nginx-v0.0.2
+    volumes:
+      - static-volume:/usr/share/nginx/html/static
+    environment:
       - ./nginx/nginx_container.env
     ports:
       - "80:80"
     depends_on:
       - app
 
+  psql:
+    build:
+      context: ./database
+    container_name: psql_container
+    image: andrewodrain/web-applications:psql-v0.0.2
+    env_file:
+      - ./database/psql_container.env
+
+volumes:
+  app-volume: { }
+  static-volume: { }
+
+#    volumes:
+#      - redis-data:/app/redis/redis-data
+#      - redis-dump:/app/redis/dump-rdb
+#  redis-data: { }
+#  redis-dump: { }
