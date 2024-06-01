@@ -18,5 +18,7 @@ RUN apt-get update && \
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
+EXPOSE 5000
+
 # Start gunicorn with specified workers, bind address, and configuration file
 CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]

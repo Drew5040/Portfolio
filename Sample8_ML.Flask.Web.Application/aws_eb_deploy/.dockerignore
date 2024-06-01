@@ -1,0 +1,14 @@
+
+
+__pycache__/
+.elasticbeanstalk
+database/dump
+load_testing
+.git/
+.ebextensions
+.gitignore
+*.env
+*.pyo
+*.sh
+Dockerrun.aws.json
+dump.rdb

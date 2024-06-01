@@ -1,6 +1,8 @@
 # Get image
 FROM postgres:16.1
 
+WORKDIR /app
+
 RUN mkdir -p /app/postgresql/psql-data && \
     chown -R postgres:postgres /app/postgresql/psql-data
 

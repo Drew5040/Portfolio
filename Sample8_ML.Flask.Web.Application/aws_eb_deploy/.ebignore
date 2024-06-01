@@ -1,35 +1,22 @@
 
 # Ignore Python directories
 __pycache__/
-*.pyo
 
 # Ignore version control directories
 .git/
 .gitignore
 
 # Ignore local development related files
-docker-compose.yml
-Dockerfile.*
-Dockerfile
 .dockerignore
+docker-compose.yml
 
 # Ignore environment variables
 *.env
 
-# Requirements
-requirements.txt
+load_testing
 
-# Pickle files
-model.pkl
-
-# Ignore project specific directories & files
-database/
-nginx/
-app/static/
-app/templates/
-redis/
-load_testing/
-
+*.sh
+dump.rdb
 
 
 

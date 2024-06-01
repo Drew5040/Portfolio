@@ -1,5 +1,5 @@
 {
-  "AWSEBDockerrunVersion": "2",
+  "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
       "name": "psql_container",
@@ -9,7 +9,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/var/log/containers/psql",
+          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/psql",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "psql"
         }
@@ -30,7 +30,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/var/log/containers/app",
+          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/app",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "app"
         }
@@ -49,7 +49,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/var/log/containers/redis",
+          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/redis",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "redis"
         }
@@ -75,7 +75,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/var/log/containers/celery",
+          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/celery",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "celery"
         }
@@ -92,7 +92,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/var/log/containers/nginx",
+          "awslogs-group": "/aws/elasticbeanstalk/portfolio-app/nginx",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "nginx"
         }
@@ -121,7 +121,7 @@
         {
           "sourceVolume": "modsecurity-data",
           "containerPath": "/var/modsecurity/data",
-          "readOnly": false
+          "ReadOnly": false
         }
       ],
       "portMappings": [
@@ -129,6 +129,9 @@
           "hostPort": 80,
           "containerPort": 80
         }
+      ],
+      "links": [
+        "app_container"
       ]
     }
   ],
@@ -142,13 +145,13 @@
     {
       "name": "redis-data",
       "host": {
-        "sourcePath": "/app/redis/redis-data"
+        "sourcePath": "/var/app/current/redis_database/redis-data"
       }
     },
     {
       "name": "redis-config",
       "host": {
-        "sourcePath": "/app/redis/redis-config"
+        "sourcePath": "/var/app/current/redis_database/redis-config"
       }
     },
     {
@@ -183,6 +186,3 @@
     }
   ]
 }
-
-
-

@@ -34,7 +34,7 @@ services:
     image: andrewodrain/web-applications:redis-v0.0.2
     container_name: redis_container
     env_file:
-      - ./redis_database/redis_container.env
+      - redis_database/redis_container.env
 
   nginx:
     build:
@@ -56,14 +56,13 @@ services:
     container_name: psql_container
     image: andrewodrain/web-applications:psql-v0.0.2
     env_file:
-      - ./database/psql_container.env
+      - database/psql_container.env
 
 volumes:
   app-volume: { }
   static-volume: { }
 
-#    volumes:
-#      - redis-data:/app/redis/redis-data
-#      - redis-dump:/app/redis/dump-rdb
-#  redis-data: { }
-#  redis-dump: { }
+
+
+
+

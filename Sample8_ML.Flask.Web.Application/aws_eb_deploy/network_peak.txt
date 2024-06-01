@@ -1,6 +1,0 @@
-CONTAINER ID   NAME               CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O   PIDS
-4a53c962ad7c   nginx_container    0.37%     30.84MiB / 15.47GiB   0.19%     6.02MB / 2.11MB   0B / 0B     34
-5413a0ba5ac8   app_container      1.22%     322.7MiB / 15.47GiB   2.04%     2.12MB / 6.62MB   0B / 0B     129
-8c9392b998af   celery_container   0.06%     1.303GiB / 15.47GiB   8.43%     1.01MB / 1.09MB   0B / 0B     33
-fedba8e79bc6   psql_container     0.18%     40.83MiB / 15.47GiB   0.26%     676kB / 1.73MB    0B / 0B     10
-d6a8fb508df1   redis_container    0.14%     9.457MiB / 15.47GiB   0.06%     1.14MB / 912kB    0B / 0B     6

@@ -15,8 +15,8 @@ RUN mkdir -p /app/redis/redis-data/ \
     chown -R redis:redis /app/redis
 
 # Copy the redis.conf file to container
-COPY ./redis.conf /app/redis/redis-config/redis.conf
-COPY ./redis.acl  /app/redis/redis-config/redis.acl
+COPY redis.conf /app/redis/redis-config/redis.conf
+COPY redis.acl  /app/redis/redis-config/redis.acl
 
 ENV REDIS_CONFIG_FILE /app/redis/redis-config/redis.conf
 ENV REDIS_ACL_FILE /app/redis/redis-config/redis.acl
