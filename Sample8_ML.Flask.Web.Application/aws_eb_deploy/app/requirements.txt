@@ -41,7 +41,7 @@ Flask-WTF==1.2.1
 flower==2.0.1
 glcontext==2.5.0
 greenlet==3.0.3
-gunicorn==21.2.0
+gunicorn==22.0.0
 idna==3.6
 ipython==8.12.3
 isort==5.13.2
