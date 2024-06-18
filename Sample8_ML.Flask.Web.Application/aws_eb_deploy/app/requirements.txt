@@ -108,7 +108,7 @@ ruamel.yaml==0.18.6
 ruamel.yaml.clib==0.2.8
 safety==3.1.0
 safety-schemas==0.0.2
-scikit-learn==1.4.0
+scikit-learn==1.5.0
 scipy==1.13.0
 screeninfo==0.8.1
 shellingham==1.5.4
