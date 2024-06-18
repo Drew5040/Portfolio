@@ -3,8 +3,13 @@ FROM postgres:16.1
 
 WORKDIR /app
 
-RUN mkdir -p /app/postgresql/psql-data && \
+RUN apt-get update && \
+    apt-get install -y curl wget && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /app/postgresql/psql-data && \
     chown -R postgres:postgres /app/postgresql/psql-data
+
 
 # Copy schemas and data into docker init to create tables & data
 COPY ./schemas/site_content_tables.sql /docker-entrypoint-initdb.d/01-site_content_tables.sql

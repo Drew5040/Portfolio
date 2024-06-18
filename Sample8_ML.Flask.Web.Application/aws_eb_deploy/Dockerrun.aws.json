@@ -5,7 +5,7 @@
       "name": "psql_container",
       "image": "andrewodrain/web-applications:psql-v0.0.2",
       "essential": true,
-      "memory": 100,
+      "memory": 300,
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -35,6 +35,16 @@
           "awslogs-stream-prefix": "app"
         }
       },
+      "mountPoints": [
+        {
+          "sourceVolume": "app-volume",
+          "containerPath": "/app"
+        },
+        {
+          "sourceVolume": "static-volume",
+          "containerPath": "/app/static"
+        }
+      ],
       "links": [
         "psql_container",
         "redis_container",
@@ -45,7 +55,7 @@
       "name": "redis_container",
       "image": "andrewodrain/web-applications:redis-v0.0.2",
       "essential": true,
-      "memory": 20,
+      "memory": 1000,
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -71,7 +81,13 @@
       "name": "celery_container",
       "image": "andrewodrain/web-applications:celery-v0.0.2",
       "essential": true,
-      "memory": 10,
+      "memory": 500,
+      "mountPoints": [
+        {
+          "sourceVolume": "app-volume",
+          "containerPath": "/app"
+        }
+      ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -88,7 +104,7 @@
       "name": "nginx_container",
       "image": "andrewodrain/web-applications:nginx-v0.0.2",
       "essential": true,
-      "memory": 50,
+      "memory": 100,
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -99,8 +115,12 @@
       },
       "mountPoints": [
         {
+          "sourceVolume": "static-volume",
+          "containerPath": "/usr/share/nginx/html/static"
+        },
+        {
           "sourceVolume": "modsecurity-logs",
-          "containerPath": "/var/log/modsecurity",
+          "containerPath": "/opt/modsecurity/var/log",
           "readOnly": false
         },
         {
@@ -121,7 +141,7 @@
         {
           "sourceVolume": "modsecurity-data",
           "containerPath": "/var/modsecurity/data",
-          "ReadOnly": false
+          "readOnly": false
         }
       ],
       "portMappings": [
@@ -137,9 +157,21 @@
   ],
   "volumes": [
     {
+      "name": "app-volume",
+      "host": {
+        "sourcePath": "/var/app/current/app"
+      }
+    },
+    {
+      "name": "static-volume",
+      "host": {
+        "sourcePath": "/var/app/current/app/static"
+      }
+    },
+    {
       "name": "psql-data",
       "host": {
-        "sourcePath": "/app/postgresql/psql-data"
+        "sourcePath": "/var/app/current/database/psql-data"
       }
     },
     {
@@ -157,31 +189,31 @@
     {
       "name": "modsecurity-logs",
       "host": {
-        "sourcePath": "/var/app/modsecurity/logs"
+        "sourcePath": "/var/app/current/nginx/modsecurity/logs"
       }
     },
     {
       "name": "nginx-healthd-logs",
       "host": {
-        "sourcePath": "/var/app/nginx/healthd/logs"
+        "sourcePath": "/var/app/current/nginx/conf/logs/healthd"
       }
     },
     {
       "name": "modsecurity-config",
       "host": {
-        "sourcePath": "/var/app/modsecurity/config"
+        "sourcePath": "/var/app/current/nginx/modsecurity/conf"
       }
     },
     {
       "name": "modsecurity-tmp",
       "host": {
-        "sourcePath": "/var/app/modsecurity/tmp"
+        "sourcePath": "/var/app/current/nginx/modsecurity/mod-tmp-data"
       }
     },
     {
       "name": "modsecurity-data",
       "host": {
-        "sourcePath": "/var/app/modsecurity/data"
+        "sourcePath": "/var/app/current/nginx/modsecurity/mod-data"
       }
     }
   ]

@@ -252,6 +252,32 @@ def health():
     return 'OK', 200
 
 
+@app.route('/error/<int:code>')
+def handle_error(code):
+    if code == 400:
+        return render_template('error_handlers/400.html'), 400
+    elif code == 401:
+        return render_template('error_handlers/401.html'), 401
+    elif code == 403:
+        return render_template('error_handlers/403.html'), 403
+    elif code == 404:
+        return render_template('error_handlers/404.html'), 404
+    elif code == 405:
+        return render_template('error_handlers/405.html'), 405
+    elif code == 429:
+        return render_template('error_handlers/429.html'), 429
+    elif code == 500:
+        return render_template('error_handlers/500.html'), 500
+    elif code == 502:
+        return render_template('error_handlers/502.html'), 502
+    elif code == 503:
+        return render_template('error_handlers/503.html'), 503
+    elif code == 504:
+        return render_template('error_handlers/504.html'), 504
+    else:
+        return render_template('error_handlers/default.html'), code
+
+
 class FlaskApplication(Application):
     """
     FlaskApplication configures and initializes the Gunicorn server with Flask application.

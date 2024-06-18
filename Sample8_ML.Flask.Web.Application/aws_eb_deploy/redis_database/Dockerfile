@@ -1,29 +1,23 @@
 FROM redis:latest
 
-WORKDIR /app
-
-# Update OS
+# Update OS, install OS libraries, change permissions, and create needed directories
 RUN apt-get update && \
-    rm -rf /var/lib/apt/lists/*
-
-# Make appropriate log & mount directories
-RUN mkdir -p /app/redis/redis-data/ \
+    apt-get install -y curl wget redis-tools procps && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /app/redis/redis-data/ \
              /app/redis/dump-rdb/ \
-             /app/redis/redis-config/  \
+             /app/redis/redis-config/ \
              /app/redis/log/ && \
-    touch    /app/redis/log/redis-server.log && \
+    touch /app/redis/log/redis-server.log && \
     chown -R redis:redis /app/redis
 
-# Copy the redis.conf file to container
-COPY redis.conf /app/redis/redis-config/redis.conf
-COPY redis.acl  /app/redis/redis-config/redis.acl
+# Copy the redis.conf, redis.acl, and custom sysctl.conf files to the container
+COPY ./redis-config/redis.conf /app/redis/redis-config/redis.conf
+COPY ./redis-config/redis.acl /app/redis/redis-config/redis.acl
+COPY ./redis-config/sysctl.conf /etc/sysctl.conf
 
-ENV REDIS_CONFIG_FILE /app/redis/redis-config/redis.conf
-ENV REDIS_ACL_FILE /app/redis/redis-config/redis.acl
-
-CMD ["sh", "-c", "exec redis-server \"$REDIS_CONFIG_FILE\" --aclfile \"$REDIS_ACL_FILE\" --requirepass \"$SUPER_SECRET_PASSWORD\" --bind 0.0.0.0"]
-
-
-
+# Start Redis server with the configuration file
+CMD ["redis-server", "/app/redis/redis-config/redis.conf"]
 
 

@@ -7,14 +7,25 @@ WORKDIR /app
 # Copy the entire local application directory
 COPY . /app
 
+RUN adduser --disabled-password --gecos '' celeryuser
+
 # Update OS and clean up
 RUN apt-get update && \
     apt-get install -y gcc python3-dev pkg-config libcairo2-dev supervisor && \
+    apt-get install -y curl && \
+    apt-get install -y wget && \
+    apt-get install -y redis-tools && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
+
+# Change to non-root user for security
+USER celeryuser
+
+EXPOSE 5555
 
 # Start Celery worker
 CMD ["celery", "-A", "app.celery", "worker", "--loglevel=info"]

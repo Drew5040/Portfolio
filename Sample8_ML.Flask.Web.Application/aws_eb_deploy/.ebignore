@@ -14,9 +14,8 @@ docker-compose.yml
 *.env
 
 load_testing
-
-*.sh
+shell_scripts
 dump.rdb
-
+health-check.config
 
 

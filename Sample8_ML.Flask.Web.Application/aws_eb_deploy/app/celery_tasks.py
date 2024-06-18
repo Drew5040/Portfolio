@@ -28,7 +28,7 @@ def send_email_task(self, sender, name, subject, message):
 
             # Grab the local hostname for SMTP parameter
             local_hostname = socket.gethostname()
-            lager.info('Attempting to use hostname: ', local_hostname)
+            lager.info('Attempting to use hostname: %s', local_hostname)
 
             # Send the email
             with SMTP("smtp.office365.com", 587, local_hostname=local_hostname) as server:

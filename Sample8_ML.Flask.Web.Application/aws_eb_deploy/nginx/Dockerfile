@@ -31,6 +31,7 @@ RUN apt-get update && \
     libcurl4-openssl-dev \
     liblmdb-dev \
     pkgconf &&\
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Clone and build ModSecurity
@@ -71,13 +72,15 @@ RUN mkdir -p $MODSEC_TMP_DIR $MODSEC_DATA_DIR \
             /etc/nginx/modules-available \
             /etc/nginx/modules-enabled \
             /data/nginx/cache \
-            /var/log/nginx/healthd/
+            /var/log/nginx/healthd/ \
+            /usr/share/nginx/html/static
 
 # Adjust permissions and ownership
-RUN chown -R nginx:nginx $MODSEC_TMP_DIR $MODSEC_DATA_DIR /data/nginx/cache /var/log/nginx/healthd/ && \
+RUN chown -R nginx:nginx $MODSEC_TMP_DIR $MODSEC_DATA_DIR /data/nginx/cache /var/log/nginx/healthd /usr/share/nginx/html/static && \
     chmod -R 700 $MODSEC_TMP_DIR $MODSEC_DATA_DIR && \
     chmod -R 770 /data/nginx/cache && \
-    chmod -R 755 /var/log/nginx/healthd/
+    chmod -R 755 /var/log/nginx/healthd
+
 
 # Create needed files
 RUN touch /opt/modsecurity/var/log/debug.log \

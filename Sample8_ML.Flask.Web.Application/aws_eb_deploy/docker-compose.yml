@@ -33,6 +33,7 @@ services:
       context: ./redis_database
     image: andrewodrain/web-applications:redis-v0.0.2
     container_name: redis_container
+    privileged: true
     env_file:
       - redis_database/redis_container.env
 

@@ -46,5 +46,5 @@ while true; do
         printf "%-15s %-20s %-10.2f %-10.2f %-15.2f %-15.2f\n" "$container_id" "$container_name" "${max_cpu["$container_id"]}" "${min_cpu["$container_id"]}" "${max_mem["$container_id"]}" "${min_mem["$container_id"]}"
     done
 
-    sleep 5  # Adjust the sleep time as needed
+    sleep 5
 done
