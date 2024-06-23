@@ -4,7 +4,7 @@ __pycache__/
 
 # Ignore version control directories
 .git/
-.gitignore
+../.gitignore
 
 # Ignore local development related files
 .dockerignore

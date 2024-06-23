@@ -6,7 +6,7 @@ shell_scripts
 database/dump
 .git/
 .ebextensions
-.gitignore
+../.gitignore
 *.env
 *.pyo
 *.sh
