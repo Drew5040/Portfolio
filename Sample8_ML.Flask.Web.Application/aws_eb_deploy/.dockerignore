@@ -4,7 +4,6 @@ __pycache__/
 shell_scripts
 .elasticbeanstalk
 database/dump
-load_testing
 .git/
 .ebextensions
 .gitignore
@@ -13,3 +12,4 @@ load_testing
 *.sh
 Dockerrun.aws.json
 dump.rdb
+testing

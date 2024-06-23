@@ -13,9 +13,8 @@ docker-compose.yml
 # Ignore environment variables
 *.env
 
-load_testing
 shell_scripts
 dump.rdb
 health-check.config
-
+testing
 

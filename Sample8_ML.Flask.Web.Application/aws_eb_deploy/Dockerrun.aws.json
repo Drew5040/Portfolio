@@ -124,11 +124,6 @@
           "readOnly": false
         },
         {
-          "sourceVolume": "nginx-healthd-logs",
-          "containerPath": "/var/log/nginx/healthd",
-          "readOnly": false
-        },
-        {
           "sourceVolume": "modsecurity-config",
           "containerPath": "/etc/modsecurity",
           "readOnly": false
@@ -190,12 +185,6 @@
       "name": "modsecurity-logs",
       "host": {
         "sourcePath": "/var/app/current/nginx/modsecurity/logs"
-      }
-    },
-    {
-      "name": "nginx-healthd-logs",
-      "host": {
-        "sourcePath": "/var/app/current/nginx/conf/logs/healthd"
       }
     },
     {

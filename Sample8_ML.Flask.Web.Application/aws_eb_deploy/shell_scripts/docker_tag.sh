@@ -6,6 +6,6 @@ repository="andrewodrain/web-applications"
 
 # Tag and push images
 for image in "${images[@]}"; do
-  docker tag "${repository}:${image}" "${repository}:${images}"
+  docker tag "${repository}:${image}" "${repository}:${image}"
   docker push "${repository}:${image}"
 done

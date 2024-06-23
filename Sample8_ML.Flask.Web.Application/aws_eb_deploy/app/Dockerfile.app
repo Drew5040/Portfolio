@@ -20,6 +20,7 @@ RUN apt-get update && \
 
 # Install Python dependencies
 RUN pip install --upgrade pip && \
+    pip install memory_profiler objgraph && \
     pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5000
