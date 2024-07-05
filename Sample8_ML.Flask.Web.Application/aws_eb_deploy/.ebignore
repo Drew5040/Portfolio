@@ -4,17 +4,17 @@ __pycache__/
 
 # Ignore version control directories
 .git/
-../.gitignore
+.gitignore/
 
 # Ignore local development related files
 .dockerignore
 docker-compose.yml
 
 # Ignore environment variables
-*.env
+env-vars/
 
-shell_scripts
+shell_scripts/
 dump.rdb
-health-check.config
-testing
+.ebextensions/health/health-check.config
+testing/
 

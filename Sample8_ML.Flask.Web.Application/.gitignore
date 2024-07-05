@@ -1,5 +1,4 @@
 # Environment Variable Files
-*.env
 env-vars.config
 
 .DS_Store
@@ -16,6 +15,7 @@ __pycache__/
 venv/
 env/
 .env/
+*.env
 
 # Ignore IDE-specific files
 .idea/
@@ -70,8 +70,6 @@ target/
 
 # Ignore backup files
 *~
-#*#
-
 
 # Ignore csv's
 *.csv
@@ -81,10 +79,3 @@ target/
 
 # Ignore psv's
 *.psv
-
-# Ignore
-csv_files/
-tsv_files/
-psv_files/
-data/
-notebook/

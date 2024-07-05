@@ -14,14 +14,20 @@ RUN apt-get update && \
     apt-get install -y curl && \
     apt-get install -y wget && \
     apt-get install -y redis-tools && \
+    apt-get install -y logrotate && \
     apt-get clean && \
+    mkdir -p /usr/local/bin && \
     rm -rf /var/lib/apt/lists/*
-
 
 # Install Python dependencies
 RUN pip install --upgrade pip && \
     pip install memory_profiler objgraph && \
     pip install --no-cache-dir -r requirements.txt
+
+COPY ./.platform/hooks/postdeploy/app-logrotate.sh /usr/local/bin/app-logrotate.sh
+
+# Change permissions for script
+RUN chmod 755 /usr/local/bin/app-logrotate.sh
 
 EXPOSE 5000
 

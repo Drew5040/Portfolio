@@ -30,6 +30,7 @@ RUN apt-get update && \
     dh-autoreconf \
     libcurl4-openssl-dev \
     liblmdb-dev \
+    logrotate \
     pkgconf &&\
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -112,16 +113,8 @@ RUN mkdir -p $MODSEC_TMP_DIR $MODSEC_DATA_DIR \
             /var/cache/nginx/uwsgi_temp \
             /var/cache/nginx/scgi_temp \
             /usr/share/nginx/html/static \
-            /data/nginx/cache
-
-# Adjust permissions and ownership
-RUN chown -R nginx:nginx $MODSEC_TMP_DIR $MODSEC_DATA_DIR /var/cache/nginx /usr/share/nginx/html/static
-
-
-# Create needed files
-RUN touch /opt/ModSecurity/var/log/debug.log \
-          /var/log/modsec_audit.log
-
+            /data/nginx/cache \
+            /usr/local/bin
 
 # Copy config files from project dir to container
 COPY modsecurity/conf/modsecurity.conf /etc/nginx/modsecurity/
@@ -131,10 +124,20 @@ COPY modsecurity/conf/crs-setup.conf /etc/nginx/modsecurity/
 COPY modsecurity/conf/main.conf /etc/nginx/modsecurity/
 COPY modsecurity/conf/unicode.mapping /etc/nginx/modsecurity/
 COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY ./.platform/hooks/postdeploy/nginx-modsec-logrotate.sh /usr/local/bin/nginx-modsec-logrotate.sh
 
 # Change permissions for main.conf and /rules
 RUN chmod 644 /etc/nginx/modsecurity/main.conf && \
-    chmod -R 755 /etc/nginx/modsecurity/rules
+    chmod -R 755 /etc/nginx/modsecurity/rules && \
+    \
+    # Change the permissions and ownership of the logrotate script
+    chmod +x /usr/local/bin/nginx-modsec-logrotate.sh && \
+    chown root:root /usr/local/bin/nginx-modsec-logrotate.sh &&  \
+    chmod 755 /usr/local/bin/nginx-modsec-logrotate.sh && \
+    \
+    # Adjust permissions and ownership
+    chown -R nginx:nginx $MODSEC_TMP_DIR $MODSEC_DATA_DIR /var/cache/nginx /usr/share/nginx/html/static && \
+    touch /opt/ModSecurity/var/log/debug.log /var/log/modsec_audit.log
 
 # Create symbolic link so Nginx can load ModSecurity
 RUN echo "load_module /usr/local/nginx/modules/ngx_http_modsecurity_module.so;" > /etc/nginx/modules-available/modsecurity.conf && \

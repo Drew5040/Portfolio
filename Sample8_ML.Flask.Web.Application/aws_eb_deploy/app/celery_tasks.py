@@ -41,9 +41,6 @@ def send_email_task(self, sender, name, subject, message):
                 server.quit()
 
         except SMTPException as e:
-            # Flash error msg
-            flash(message="Message was not sent. If Issue persists, please contact andrewodrain@outlook.com",
-                  category="error")
 
             # Log if email is not successfully sent
             lager.error(f'SMTP error occurred: {str(e)}', 'error')

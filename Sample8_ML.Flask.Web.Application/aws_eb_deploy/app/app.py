@@ -3,7 +3,7 @@ app.py
 
 This module configures and initializes the Flask application and its components.
 """
-
+from re import match, findall
 from json import dumps
 from flask import Flask, redirect, url_for, request, render_template, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -14,6 +14,7 @@ from log_config import logger
 from error_config import register_error_handlers
 from celery_config import make_celery
 from redis_config import rate_limiter
+from email_validator import validate_email, EmailNotValidError
 from content import (
 
     Metadata, NavigationLink, Footer,
@@ -182,6 +183,37 @@ def result():
     return render_template(template_name_or_list='model.html', model_page_data=model_page_data)
 
 
+def is_valid_email(email):
+    """
+    Validates the provided email address.
+
+    Args:
+        email (str): The email address to validate.
+
+    Returns:
+        str: The normalized form of the email address if valid.
+        False: If the email address is not valid.
+    """
+    try:
+        # Validate email address
+        valid = validate_email(email, check_deliverability=True)
+        return valid.normalized
+
+    except EmailNotValidError as e:
+        print(str(e))
+        return False
+
+
+def is_valid_message(message):
+    pattern = r'[a-zA-Z0-9\s.,!?\'\"@&()]*$'
+    matches = match(pattern, message)
+    if matches:
+        return True, []
+    else:
+        incorrect_chars = findall(r'[^a-zA-Z0-9\s.,!?\'\"@&()]', message)
+        return False, incorrect_chars
+
+
 @app.route(rule='/contact', methods=['GET', 'POST'])
 def contact_page():
     """Contact page view that uses the SMTP protocol
@@ -201,17 +233,29 @@ def contact_page():
         subject = request.form['subject']
         message = request.form['message']
 
-        # Validate form data
-        if not sender or not name or not subject or not message:
+        # Validate entries
+        if not (sender and name and subject and message and is_valid_email(sender)):
             flash(message="All fields are required", category="error")
-            return render_template(template_name_or_list='contact.html')
+            return redirect(location=url_for(endpoint='contact_page'))
+
+        # Validate email address
+        normalized_email = is_valid_email(sender)
+        if not normalized_email:
+            flash(message="Invalid email address", category="error")
+            return redirect(location=url_for(endpoint='contact_page'))
+
+        # Validate message
+        is_valid, incorrect_chars = is_valid_message(message)
+        if not is_valid:
+            flash(f"Invalid characters in the message: {' '.join(incorrect_chars)}", category="error")
+            return redirect(url_for('contact_page'))
 
         # Log that validation is taking place
         logger.info(msg='Contact form data grabbed...')
 
         # Insert data into ContactSubmissions table
         new_contact_submission = ContactSubmissions(
-            email=sender,
+            email=normalized_email,
             name=name,
             subject=subject,
             message=message
