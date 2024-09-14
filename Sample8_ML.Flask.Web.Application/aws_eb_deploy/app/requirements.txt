@@ -136,5 +136,5 @@ vine==5.1.0
 watchdog==3.0.0
 wcwidth==0.2.13
 webencodings==0.5.1
-Werkzeug==3.0.1
+Werkzeug==3.0.3
 yarg==0.1.9
