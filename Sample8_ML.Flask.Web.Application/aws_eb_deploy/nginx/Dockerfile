@@ -1,5 +1,5 @@
 # Base image with necessary build tools
-FROM ubuntu:24.04
+FROM ubuntu:20.04 as builder
 
 # Avoid prompts during installation
 ARG DEBIAN_FRONTEND=noninteractive
@@ -9,34 +9,26 @@ ARG NGINX_VERSION=1.26.1
 ARG MODSECURITY_COMMIT=dc8af8f23d6c23407a5bcb6da7b28a3c025f914b
 ARG MODSECURITY_NGINX_COMMIT=ef64996aedd4bb5fa1831631361244813d48b82f
 
-# Install build tools and dependencies (curl & ping added for debugging)
+# Install necessary build tools and libraries for Nginx and ModSecurity
 RUN apt-get update && \
-    apt-get install -y \
-    curl \
-    iputils-ping \
-    make \
+    apt-get install --no-install-recommends -y \
     automake \
     build-essential \
-    zlib1g-dev \
-    libpcre3 \
-    libpcre3-dev \
-    libssl-dev \
-    wget \
+    ca-certificates \
     git \
+    wget \
     libxml2-dev \
-    libyajl-dev \
-    libgeoip-dev \
     libtool \
-    dh-autoreconf \
-    libcurl4-openssl-dev \
-    liblmdb-dev \
-    logrotate \
-    pkgconf &&\
+    libssl-dev \
+    libpcre3-dev \
+    libyajl-dev \
+    zlib1g-dev \
+    curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Clone and build ModSecurity
-RUN git clone --depth 1 https://github.com/SpiderLabs/ModSecurity.git /opt/ModSecurity && \
+RUN git clone https://github.com/SpiderLabs/ModSecurity.git /opt/ModSecurity && \
     cd /opt/ModSecurity && \
     git checkout $MODSECURITY_COMMIT && \
     git submodule init && \
@@ -47,7 +39,7 @@ RUN git clone --depth 1 https://github.com/SpiderLabs/ModSecurity.git /opt/ModSe
     make install
 
 # Clone ModSecurity-Nginx connector
-RUN git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git /opt/ModSecurity-nginx && \
+RUN git clone https://github.com/SpiderLabs/ModSecurity-nginx.git /opt/ModSecurity-nginx && \
     cd /opt/ModSecurity-nginx && \
     git checkout $MODSECURITY_NGINX_COMMIT
 
@@ -93,37 +85,64 @@ RUN NGINX_VERSION=1.26.1 && \
     mkdir -p /usr/local/nginx/modules && \
     cp objs/ngx_http_modsecurity_module.so /usr/local/nginx/modules
 
+## STAGE 2: Build ##
+FROM ubuntu:24.04
+
+COPY --from=builder /usr/sbin/nginx /usr/sbin/nginx
+COPY --from=builder /etc/nginx /etc/nginx
+COPY --from=builder /usr/local/nginx/modules/ngx_http_modsecurity_module.so /usr/local/nginx/modules/ngx_http_modsecurity_module.so
+
+# Install necessary libraries and debugging tools
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+    cron \
+    git \
+    ca-certificates \
+    libxml2 \
+    libtool \
+    openssl \
+    libpcre3 \
+    libyajl-dev \
+    zlib1g \
+    curl \
+    nano \
+    logrotate \
+    iputils-ping \
+    procps && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # Create Nginx user & group
 RUN getent group nginx || groupadd -r nginx
 RUN getent passwd nginx || useradd -r -g nginx -s /bin/false -d /var/www nginx
 
 # Make all config & logging directories for nginx & modsecurity
-RUN mkdir -p $MODSEC_TMP_DIR $MODSEC_DATA_DIR \
-            /opt/ModSecurity/var/log/ \
-            /var/modsecurity/tmp/ \
-            /var/modsecurity/tmp_data/ \
-            /etc/nginx/modsecurity/rules/ \
-            /etc/nginx/modsecurity/ \
-            /etc/nginx/modules-available \
-            /etc/nginx/modules-enabled \
-            /var/cache/nginx \
-            /var/cache/nginx/client_temp \
-            /var/cache/nginx/proxy_temp \
-            /var/cache/nginx/fastcgi_temp \
-            /var/cache/nginx/uwsgi_temp \
-            /var/cache/nginx/scgi_temp \
-            /usr/share/nginx/html/static \
-            /data/nginx/cache \
-            /usr/local/bin
+RUN mkdir -p /var/modsecurity/tmp_data \
+             /var/modsecurity/tmp \
+             /opt/ModSecurity/var/log/ \
+             /etc/nginx/modsecurity/aws_ips \
+             /etc/nginx/modsecurity/rules/ \
+             /etc/nginx/modules-available \
+             /etc/nginx/modules-enabled \
+             /var/cache/nginx \
+             /var/cache/nginx/client_temp \
+             /var/cache/nginx/proxy_temp \
+             /var/cache/nginx/fastcgi_temp \
+             /var/cache/nginx/uwsgi_temp \
+             /var/cache/nginx/scgi_temp \
+             /usr/share/nginx/html/static \
+             /data/nginx/cache \
+             /usr/local/bin
 
 # Copy config files from project dir to container
-COPY modsecurity/conf/modsecurity.conf /etc/nginx/modsecurity/
-COPY modsecurity/conf/crs-setup.conf /etc/nginx/modsecurity/
-COPY modsecurity/rules/* /etc/nginx/modsecurity/rules/
-COPY modsecurity/conf/crs-setup.conf /etc/nginx/modsecurity/
-COPY modsecurity/conf/main.conf /etc/nginx/modsecurity/
-COPY modsecurity/conf/unicode.mapping /etc/nginx/modsecurity/
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY ./modsecurity/conf/modsecurity.conf /etc/nginx/modsecurity/modsecurity.conf
+COPY ./modsecurity/conf/crs-setup.conf /etc/nginx/modsecurity/crs-setup.conf
+COPY ./modsecurity/rules/* /etc/nginx/modsecurity/rules/
+COPY ./modsecurity/aws_ips/aws_ip_whitelist.conf /etc/nginx/modsecurity/aws_ip_whitelist.conf
+COPY ./modsecurity/conf/main.conf /etc/nginx/modsecurity/aws_ips/main.conf
+COPY ./modsecurity/conf/unicode.mapping /etc/nginx/modsecurity/unicode.mapping
+COPY ./conf/mime.types /etc/nginx/mime.types
+COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./.platform/hooks/postdeploy/nginx-modsec-logrotate.sh /usr/local/bin/nginx-modsec-logrotate.sh
 
 # Change permissions for main.conf and /rules

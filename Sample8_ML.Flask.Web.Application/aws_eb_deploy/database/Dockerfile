@@ -7,10 +7,7 @@ RUN apt-get update && \
     apt-get install -y curl wget && \
     apt-get install -y logrotate && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    mkdir -p /app/postgresql/psql-data  \
-             /usr/local/bin && \
-    chown -R postgres:postgres /app/postgresql/psql-data
+    rm -rf /var/lib/apt/lists/*
 
 # Copy schemas and data into docker init to create tables & data
 COPY ./schemas/site_content_tables.sql /docker-entrypoint-initdb.d/01-site_content_tables.sql

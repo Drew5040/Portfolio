@@ -110,7 +110,7 @@ EOL
 cat <<EOL > /etc/logrotate.d/modsec-audit-log
 /var/log/modsec_audit.log {
     daily
-    rotate 7
+    rotate 10
     compress
     missingok
     notifempty
@@ -126,7 +126,7 @@ EOL
 cat <<EOL > /etc/logrotate.d/modsec-debug-log
  /opt/ModSecurity/var/log/debug.log {
     daily
-    rotate 7
+    rotate 10
     compress
     missingok
     notifempty
@@ -142,7 +142,7 @@ EOL
 cat <<EOL > /etc/logrotate.d/nginx-error-log
 /var/log/nginx/error.log {
     daily
-    rotate 7
+    rotate 10
     compress
     missingok
     notifempty
@@ -158,7 +158,7 @@ EOL
 cat <<EOL > /etc/logrotate.d/nginx-access-log
 /var/log/nginx/access.log {
     daily
-    rotate 7
+    rotate 10
     compress
     missingok
     notifempty
@@ -177,7 +177,7 @@ EOL
 cat <<EOL > /etc/logrotate.d/modsecurity-tmp
 /var/modsecurity/tmp/* {
     daily
-    rotate 7
+    rotate 10
     compress
     missingok
     notifempty
@@ -192,7 +192,7 @@ EOL
 cat <<EOL > /etc/logrotate.d/modsecurity-tmp-data
 /var/modsecurity/tmp_data/* {
     daily
-    rotate 7
+    rotate 10
     compress
     missingok
     notifempty

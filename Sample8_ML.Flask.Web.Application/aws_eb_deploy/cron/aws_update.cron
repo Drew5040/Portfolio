@@ -1,0 +1,5 @@
+
+# Update AWS IP ranges daily at midnight
+11 30 * * * /usr/local/bin/aws_update_ips.sh >> /dev/stdout 2>> /dev/stderr
+
+

@@ -33,9 +33,20 @@ services:
       context: ./redis_database
     image: andrewodrain/web-applications:redis-v0.0.2
     container_name: redis_container
-    privileged: true
     env_file:
-      - redis_database/redis_container.env
+      - ./redis_database/redis_container.env
+
+  cron:
+    build:
+      context: ./cron
+    container_name: cron_container
+    image: andrewodrain/web-applications:cron-v0.0.2
+    volumes:
+      - aws-ips:/etc/nginx/modsecurity/aws_ips
+    env_file:
+      - ./cron/cron_container.env
+    depends_on:
+      - nginx
 
   nginx:
     build:
@@ -44,7 +55,8 @@ services:
     image: andrewodrain/web-applications:nginx-v0.0.2
     volumes:
       - static-volume:/usr/share/nginx/html/static
-    environment:
+      - aws-ips:/etc/nginx/modsecurity/aws_ips
+    env_file:
       - ./nginx/nginx_container.env
     ports:
       - "80:80"
@@ -56,14 +68,16 @@ services:
       context: ./database
     container_name: psql_container
     image: andrewodrain/web-applications:psql-v0.0.2
+    volumes:
+      - psql-data:/var/lib/postgresql/data
     env_file:
-      - database/psql_container.env
+      - ./database/psql_container.env
 
 volumes:
   app-volume: { }
   static-volume: { }
-
-
+  aws-ips: { }
+  psql-data: { }
 
 
 
