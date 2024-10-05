@@ -13,7 +13,9 @@ done
 
 docker compose up --build -d
 
-#clear
+#docker compose build --no-cache
+#
+#docker compose up -d
 
 
 

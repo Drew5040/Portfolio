@@ -1,5 +1,5 @@
 # Base image with necessary build tools
-FROM ubuntu:20.04 as builder
+FROM ubuntu:22.04 AS builder
 
 # Avoid prompts during installation
 ARG DEBIAN_FRONTEND=noninteractive
@@ -37,6 +37,13 @@ RUN git clone https://github.com/SpiderLabs/ModSecurity.git /opt/ModSecurity && 
     ./configure && \
     make && \
     make install
+
+# Debug: Verify if the library is installed after the build
+RUN ls -l /usr/local/lib && \
+    ls -l /usr/local/modsecurity/lib
+
+#RUN ls -l /usr/lib/nginx/modules/ngx_http_modsecurity_module.so
+
 
 # Clone ModSecurity-Nginx connector
 RUN git clone https://github.com/SpiderLabs/ModSecurity-nginx.git /opt/ModSecurity-nginx && \
@@ -85,14 +92,21 @@ RUN NGINX_VERSION=1.26.1 && \
     mkdir -p /usr/local/nginx/modules && \
     cp objs/ngx_http_modsecurity_module.so /usr/local/nginx/modules
 
+#RUN ls -l /usr/sbin/nginx
+
+
 ## STAGE 2: Build ##
-FROM ubuntu:24.04
+FROM ubuntu:22.04
+
+# Create the destination directory for the ngx module
+RUN mkdir -p /usr/lib/nginx/modules
 
 COPY --from=builder /usr/sbin/nginx /usr/sbin/nginx
 COPY --from=builder /etc/nginx /etc/nginx
-COPY --from=builder /usr/local/nginx/modules/ngx_http_modsecurity_module.so /usr/local/nginx/modules/ngx_http_modsecurity_module.so
+COPY --from=builder /usr/lib/nginx/modules/ngx_http_modsecurity_module.so /usr/lib/nginx/modules/ngx_http_modsecurity_module.so
+COPY --from=builder /usr/local/modsecurity/lib/libmodsecurity.so.3 /usr/local/lib/libmodsecurity.so.3
 
-# Install necessary libraries and debugging tools
+# Second Stage: Install only necessary runtime libraries for Nginx and ModSecurity
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
     cron \
@@ -100,9 +114,11 @@ RUN apt-get update && \
     ca-certificates \
     libxml2 \
     libtool \
-    openssl \
     libpcre3 \
-    libyajl-dev \
+    libyajl2 \
+    libssl3 \
+    liblmdb0 \
+    libgeoip1 \
     zlib1g \
     curl \
     nano \
@@ -119,6 +135,7 @@ RUN getent passwd nginx || useradd -r -g nginx -s /bin/false -d /var/www nginx
 # Make all config & logging directories for nginx & modsecurity
 RUN mkdir -p /var/modsecurity/tmp_data \
              /var/modsecurity/tmp \
+             /var/log/nginx \
              /opt/ModSecurity/var/log/ \
              /etc/nginx/modsecurity/aws_ips \
              /etc/nginx/modsecurity/rules/ \
@@ -139,7 +156,7 @@ COPY ./modsecurity/conf/modsecurity.conf /etc/nginx/modsecurity/modsecurity.conf
 COPY ./modsecurity/conf/crs-setup.conf /etc/nginx/modsecurity/crs-setup.conf
 COPY ./modsecurity/rules/* /etc/nginx/modsecurity/rules/
 COPY ./modsecurity/aws_ips/aws_ip_whitelist.conf /etc/nginx/modsecurity/aws_ip_whitelist.conf
-COPY ./modsecurity/conf/main.conf /etc/nginx/modsecurity/aws_ips/main.conf
+COPY ./modsecurity/conf/main.conf /etc/nginx/modsecurity/main.conf
 COPY ./modsecurity/conf/unicode.mapping /etc/nginx/modsecurity/unicode.mapping
 COPY ./conf/mime.types /etc/nginx/mime.types
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
@@ -155,11 +172,11 @@ RUN chmod 644 /etc/nginx/modsecurity/main.conf && \
     chmod 755 /usr/local/bin/nginx-modsec-logrotate.sh && \
     \
     # Adjust permissions and ownership
-    chown -R nginx:nginx $MODSEC_TMP_DIR $MODSEC_DATA_DIR /var/cache/nginx /usr/share/nginx/html/static && \
+    chown -R nginx:nginx /var/log/nginx /var/cache/nginx /usr/share/nginx/html/static && \
     touch /opt/ModSecurity/var/log/debug.log /var/log/modsec_audit.log
 
 # Create symbolic link so Nginx can load ModSecurity
-RUN echo "load_module /usr/local/nginx/modules/ngx_http_modsecurity_module.so;" > /etc/nginx/modules-available/modsecurity.conf && \
+RUN echo "load_module /usr/lib/nginx/modules/ngx_http_modsecurity_module.so;" > /etc/nginx/modules-available/modsecurity.conf && \
     ln -s /etc/nginx/modules-available/modsecurity.conf /etc/nginx/modules-enabled/modsecurity.conf
 
 # Expose port 80 so Nginx can route traffic to Gunicorn server
@@ -167,3 +184,4 @@ EXPOSE 80
 
 # Spin up Nginx
 CMD ["nginx", "-g", "daemon off;"]
+
