@@ -1,5 +1,6 @@
 
 # Update AWS IP ranges daily at midnight
-0 0 * * * /usr/local/bin/aws_update_ips.sh >> /dev/stdout 2>> /dev/stderr
+0 0 * * * root . /etc/environment; /usr/local/bin/aws_update_ips.sh >> /proc/1/fd/1 2>> /proc/1/fd/2
+
 
 

@@ -109,7 +109,6 @@ COPY --from=builder /usr/local/modsecurity/lib/libmodsecurity.so.3 /usr/local/li
 # Second Stage: Install only necessary runtime libraries for Nginx and ModSecurity
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-    cron \
     git \
     ca-certificates \
     libxml2 \
@@ -155,7 +154,8 @@ RUN mkdir -p /var/modsecurity/tmp_data \
 COPY ./modsecurity/conf/modsecurity.conf /etc/nginx/modsecurity/modsecurity.conf
 COPY ./modsecurity/conf/crs-setup.conf /etc/nginx/modsecurity/crs-setup.conf
 COPY ./modsecurity/rules/* /etc/nginx/modsecurity/rules/
-COPY ./modsecurity/aws_ips/aws_ip_whitelist.conf /etc/nginx/modsecurity/aws_ip_whitelist.conf
+COPY ./modsecurity/aws_ips/aws_ip_whitelist.conf /etc/nginx/modsecurity/aws_ips/aws_ip_whitelist.conf
+COPY ./modsecurity/aws_ips/ip-ranges.json /etc/nginx/modsecurity/aws_ips/ip-ranges.json
 COPY ./modsecurity/conf/main.conf /etc/nginx/modsecurity/main.conf
 COPY ./modsecurity/conf/unicode.mapping /etc/nginx/modsecurity/unicode.mapping
 COPY ./conf/mime.types /etc/nginx/mime.types

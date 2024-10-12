@@ -1,11 +1,10 @@
 #!/bin/bash
 
-
 # Log start time
-echo "Starting AWS IP update script at $(date)" >> /dev/stdout 2>> /dev/stderr
+echo "Starting AWS IP update script at $(date)" >> /proc/1/fd/1 2>> /proc/1/fd/2
 
-# Use the URL from the environment variable if provided, otherwise use the default
-AWS_IP_RANGES_URL=${AWS_IP_RANGES_URL:-$DEFAULT_AWS_IP_RANGES_URL}
+# Log env-vars
+env >> /proc/1/fd/1 2>> /proc/1/fd/2
 
 # Fetch AWS IP ranges with TLS 1.2
 curl -s --tlsv1.2 "$AWS_IP_RANGES_URL" -o /etc/nginx/modsecurity/aws_ips/ip-ranges.json
@@ -41,4 +40,4 @@ chmod 644 /etc/nginx/modsecurity/aws_ips/aws_ip_whitelist.conf \
           /etc/nginx/modsecurity/aws_ips/ip-ranges.json
 
 # Log end time
-echo "Finished AWS IP update script at $(date)" >> /dev/stdout 2>> /dev/stderr
+echo "Finished AWS IP update script at $(date)" >> /proc/1/fd/1 2>/proc/1/fd/2
